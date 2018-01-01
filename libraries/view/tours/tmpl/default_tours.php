@@ -19,9 +19,6 @@
 						<tr>
 							<th>#</th>
 							<th>
-								<input id="tours-check-all" type="checkbox" class="tours-check-all"/>
-							</th>
-							<th>
 								<i class="fa fa-window-maximize"
 								   aria-hidden="true"></i> <?php echo \Joomla\Language\Text::_('GENERAL_LABEL_NAME'); ?>
 							</th>
@@ -52,15 +49,6 @@
 									class="is-valid-<?php echo ($tour->isValid()) ? 1 : '0 danger'; ?>"
 							>
 								<td class="vtour-id"><?php echo $tour->id; ?></td>
-								<td>
-									<input
-											type="checkbox"
-											class="checkbox-tour"
-											name="id[]"
-											value="<?php echo $tour->id ?>"
-											title="<?php echo $tour->name ?>"
-									/>
-								</td>
 								<td
 										class="vtour-name hasTooltip"
 										data-toggle="tooltip"

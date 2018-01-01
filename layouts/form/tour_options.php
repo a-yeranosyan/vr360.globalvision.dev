@@ -11,16 +11,17 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 <div class="tour-options">
 	<div class="form-group">
 		<span class="col-sm-2 control-label label label-primary">
-			<i class="fa fa-cogs" aria-hidden="true"></i> Options
+			<i class="fa fa-cogs" aria-hidden="true"></i> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTIONS'); ?>
 		</span>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Skins</label>
+		<label class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_SKIN'); ?></label>
 		<div class="col-sm-10">
 			<select class="form-control input-sm tour-skins" title="skin" name="params[skin]">
 				<?php foreach ($skins as $skin): ?>
 					<?php if ($skin != 'base.xml'): ?>
-						<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+						<?php ($skin == $tour->params->get('skin', 'default.xml')) ? $selected = 'selected' : $selected = '' ?>
+						<option value="<?php echo $skin; ?>" <?php echo $selected; ?>><?php echo $skin; ?></option>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</select>
@@ -56,6 +57,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					</label>
 				</div>
 			</div>
+			<?php if (Vr360Factory::getUser()->haveLogo()): ?>
 			<div class="form-group">
 				<div class="checkbox">
 					<label>
@@ -70,6 +72,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					</label>
 				</div>
 			</div>
+			<?php endif; ?>
 			<!-- <div class="form-group">
 				<div class="checkbox">
 					<label>
