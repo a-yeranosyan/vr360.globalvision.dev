@@ -30,7 +30,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
 	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css"> -->
+
 	<script type="text/javascript" src="./assets/vendor/jquery-2.2.4.min.js"></script>
 	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
 	<!-- Bootstrap -->
@@ -58,10 +58,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		        onclick="editHotspot();">
 			Edit
 		</button>
-		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th" onclick="moveHotspot()"
-		        ;
-		">
-		Move
+		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th"
+		        onclick="moveHotspot();">
+			Move
 		</button>
 		<button type="button" id="delete_hotpost" class="btn btn-primary btn-sm button-custom-th"
 		        onclick="deleteHotspot();">
@@ -232,9 +231,10 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 	<div class="popup" data-popup="popup-1">
 		<div class="popup-inner" id="popup">
-			<form>
+			<form class="form-inline">
 				<input type="hidden" id="user_id" value="<?php echo $tour->created_by ?>">
 				<input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
+
 				<button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom"
 				        onclick="addHotspot();">
 					<i class="fas fa-street-view"></i> Add hotspot here
@@ -243,8 +243,11 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				        onclick="setDefaultView();">
 					<i class="fas fa-eye"></i> Set default view
 				</button>
+
 				<div id="open-add-hot" class="form-inline" style="display: none;">
 					<div class="form-group">
+
+						<!-- Select type -->
 						<div class="button-group" role="group">
 							<button type="button" id="add_text" class="btn btn-primary btn-sm button-custom"
 							        onclick="addText();">
@@ -275,22 +278,20 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								<i class="fas fa-link"></i> Add Link a scene
 							</button>
 						</div>
+
 						<!-- Text-->
 						<div id="text_div" class="form-group" style="display: none;">
 							<div class="form-group">
-								<div class="form-group">
-									<input
-											id='text_t'
-											maxlength="255"
-											type="text"
-											size="29"
-											placeholder="Enter hotspot title"
-											class="form-control"
-									/>
-								</div>
-								<div class="form-group">
-
-								</div>
+								<input
+										id='text_t'
+										maxlength="255"
+										type="text"
+										size="29"
+										placeholder="Enter hotspot title"
+										class="form-control"
+								/>
+							</div>
+							<div class="form-group">
 								<textarea
 										class="form-control"
 										placeholder="Input Description"
@@ -306,7 +307,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								"
 								></textarea>
 							</div>
-							<div class="form-group" style="margin-top: 15px;">
+
+							<div class="form-group" style="">
 								<button
 										type="button"
 										id="savehotspots"
@@ -320,7 +322,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								</button>
 							</div>
 						</div>
-						<!-- ToooltIp-->
+
+						<!-- Tooltip-->
 						<div id="Tooltip_div" class="form-group" style="display: none;">
 							<div class="form-group">
 								<input
@@ -361,6 +364,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 									onclick="onclickCancel()">Back
 							</button>
 						</div>
+
 						<!-- Modal-->
 						<div id="modal_div" class="form-group" style="display: none;">
 							<div class="form-group">
@@ -401,6 +405,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 									onclick="onclickCancel()">Back
 							</button>
 						</div>
+
 						<!-- Image-->
 						<div id="image_div" class="form-group" style="display: none;">
 							<div class="form-group">
@@ -1180,9 +1185,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
         style: 'assets/redactor/minified/themes/content/default.min.css'
     }).sceditor('instance');
 
-    // console.log($(text_textarea.getBody()).html());
-
-
     var htmlToBBCode = function (html) {
 
         html = html.replace(/<pre(.*?)>(.*?)<\/pre>/gmi, "[code]$2[/code]");
@@ -1230,7 +1232,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
         html = html.replace(/<script(.*?)>(.*?)<\/script>/gmi, "");
         html = html.replace(/<style(.*?)>(.*?)<\/style>/gmi, "");
         html = html.replace(/<title>(.*?)<\/title>/gmi, "");
-        html = html.replace( / <!--(.*?)-->/gmi, "\n");
+        html = html.replace(/<!--(.*?)-->/gmi, "\n");
 
         html = html.replace(/\/\//gi, "/");
         html = html.replace(/http:\//gi, "http://");

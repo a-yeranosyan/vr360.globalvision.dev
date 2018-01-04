@@ -19,10 +19,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 		<div class="col-sm-10">
 			<select class="form-control input-sm tour-skins" title="skin" name="params[skin]">
 				<?php foreach ($skins as $skin): ?>
-					<?php if ($skin != 'base.xml'): ?>
-						<?php ($skin == $tour->params->get('skin', 'default.xml')) ? $selected = 'selected' : $selected = '' ?>
-						<option value="<?php echo $skin; ?>" <?php echo $selected; ?>><?php echo $skin; ?></option>
-					<?php endif; ?>
+					<?php ($skin == $tour->params->get('skin', 'default.xml')) ? $selected = 'selected' : $selected = '' ?>
+					<option value="<?php echo $skin; ?>" <?php echo $selected; ?>><?php echo $skin; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -58,20 +56,20 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 				</div>
 			</div>
 			<?php if (Vr360Factory::getUser()->haveLogo()): ?>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input
-								type="checkbox"
-								id="tour-param-use-logo"
-								class="tour-params"
-								name="params[userlogo]"
-								value="1"
-							<?php echo ($tour->params->get('userlogo', false)) ? 'checked="checked"' : '' ?>
-								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
-					</label>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input
+									type="checkbox"
+									id="tour-param-use-logo"
+									class="tour-params"
+									name="params[userlogo]"
+									value="1"
+								<?php echo ($tour->params->get('userlogo', false)) ? 'checked="checked"' : '' ?>
+									size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
+						</label>
+					</div>
 				</div>
-			</div>
 			<?php endif; ?>
 			<!-- <div class="form-group">
 				<div class="checkbox">
