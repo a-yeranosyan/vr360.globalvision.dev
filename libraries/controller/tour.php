@@ -102,7 +102,7 @@ class Vr360ControllerTour extends Vr360Controller
 			$ajax->addDanger(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_FAIL', $input->getInt('id')))->fail()->respond();
 		}
 
-		Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_SUCCESS', $input->getInt('id')),'success');
+		Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_SUCCESS', $tour->name),'success');
 		$ajax->success()->respond();
 	}
 

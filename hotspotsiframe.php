@@ -21,69 +21,69 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport"
-	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
-	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
-	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <!-- Globalvision -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 
-	<script type="text/javascript" src="./assets/vendor/jquery-2.2.4.min.js"></script>
-	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
-	<!-- Bootstrap -->
-	<script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="./assets/vendor/fontawesome-5.0.0/web-fonts-with-css/css/fontawesome-all.css">
-	<link rel="stylesheet" type="text/css" media="screen"
-	      href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
-	<!-- Sceditor -->
-	<link rel="stylesheet" href="assets/redactor/minified/themes/default.min.css" id="theme-style"/>
-	<script src="assets/redactor/minified/jquery.sceditor.min.js"></script>
-	<script src="assets/redactor/minified/jquery.sceditor.bbcode.min.js"></script>
-	<script src="assets/redactor/minified/sceditor.min.js"></script>
-	<script src="assets/redactor/minified/icons/monocons.js"></script>
-	<script src="assets/redactor/minified/formats/bbcode.js"></script>
+    <script type="text/javascript" src="./assets/vendor/jquery-2.2.4.min.js"></script>
+    <script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/vendor/fontawesome-5.0.0/web-fonts-with-css/css/fontawesome-all.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+    <!-- Sceditor -->
+    <link rel="stylesheet" href="assets/redactor/minified/themes/default.min.css" id="theme-style"/>
+    <script src="assets/redactor/minified/jquery.sceditor.min.js"></script>
+    <script src="assets/redactor/minified/jquery.sceditor.bbcode.min.js"></script>
+    <script src="assets/redactor/minified/sceditor.min.js"></script>
+    <script src="assets/redactor/minified/icons/monocons.js"></script>
+    <script src="assets/redactor/minified/formats/bbcode.js"></script>
 </head>
 <body>
 <div id="button-container">
-	<div class="alert alert-info show-message-for-click">
-		<strong>Hold click </strong>for adding hotspot
-	</div>
-	<div class="popup-inner" id="edit-remove-move" style="display:none;">
-		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th"
-		        onclick="editHotspot();">
-			Edit
-		</button>
-		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th"
-		        onclick="moveHotspot();">
-			Move
-		</button>
-		<button type="button" id="delete_hotpost" class="btn btn-primary btn-sm button-custom-th"
-		        onclick="deleteHotspot();">
-			Delete
-		</button>
-		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-		<div id="text_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-						type="text"
-						size="29"
-						maxlength="255"
-						placeholder="Edit title"
-						class="form-control"
-						name="hotspot_title"
-				/>
-			</div>
-			<div class="form-group">
+    <div class="alert alert-info show-message-for-click">
+        <strong>Hold click </strong>for adding hotspot
+    </div>
+    <div class="popup-inner" id="edit-remove-move" style="display:none;">
+        <button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th"
+                onclick="editHotspot();">
+            Edit
+        </button>
+        <button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th"
+                onclick="moveHotspot();">
+            Move
+        </button>
+        <button type="button" id="devare_hotpost" class="btn btn-primary btn-sm button-custom-th"
+                onclick="devareHotspot();">
+            Devare
+        </button>
+        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+        <div id="text_div_edit" class="form-group" style="display: none;">
+            <div class="form-group">
+                <input
+                        type="text"
+                        size="29"
+                        maxlength="255"
+                        placeholder="Edit title"
+                        class="form-control"
+                        name="hotspot_title"
+                />
+            </div>
+            <div class="form-group">
 				<textarea
-						class="form-control"
-						placeholder="Edit Description"
-						maxlength="255"
-						style="
+                        class="form-control"
+                        placeholder="Edit Description"
+                        maxlength="255"
+                        style="
 				resize: none;
 				width:259px;
 				overflow:hidden;
@@ -91,33 +91,33 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				margin-bottom:2px;
 				height: 155px;
 				"
-						name="hotspot_content"
-				></textarea>
-			</div>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
+                        name="hotspot_content"
+                ></textarea>
+            </div>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
 
-		<div id="modal_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-						type="text"
-						size="29"
-						maxlength="255"
-						placeholder="Edit title"
-						class="form-control"
-						name="modal_title"
-				/>
-			</div>
-			<div class="form-group">
+        <div id="modal_div_edit" class="form-group" style="display: none;">
+            <div class="form-group">
+                <input
+                        type="text"
+                        size="29"
+                        maxlength="255"
+                        placeholder="Edit title"
+                        class="form-control"
+                        name="modal_title"
+                />
+            </div>
+            <div class="form-group">
 				<textarea
-						class="form-control"
-						placeholder="Edit Description"
-						maxlength="255"
-						style="
+                        class="form-control"
+                        placeholder="Edit Description"
+                        maxlength="255"
+                        style="
 				resize: none;
 				width:259px;
 				overflow:hidden;
@@ -125,33 +125,33 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				margin-bottom:2px;
 				height: 155px;
 				"
-						name="modal_content"
-				></textarea>
-			</div>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
+                        name="modal_content"
+                ></textarea>
+            </div>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
 
-		<div id="tooltip_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-						type="text"
-						size="29"
-						maxlength="255"
-						placeholder="Edit title"
-						class="form-control"
-						name="tooltip_title"
-				/>
-			</div>
-			<div class="form-group">
+        <div id="tooltip_div_edit" class="form-group" style="display: none;">
+            <div class="form-group">
+                <input
+                        type="text"
+                        size="29"
+                        maxlength="255"
+                        placeholder="Edit title"
+                        class="form-control"
+                        name="tooltip_title"
+                />
+            </div>
+            <div class="form-group">
 				<textarea
-						class="form-control"
-						placeholder="Edit Description"
-						maxlength="255"
-						style="
+                        class="form-control"
+                        placeholder="Edit Description"
+                        maxlength="255"
+                        style="
 				resize: none;
 				width:259px;
 				overflow:hidden;
@@ -159,145 +159,147 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				margin-bottom:2px;
 				height: 155px;
 				"
-						name="tooltip_content"
-				></textarea>
-			</div>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
+                        name="tooltip_content"
+                ></textarea>
+            </div>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
 
-		<div id="image_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-						maxlength="255"
-						type="text"
-						size="29"
-						placeholder="Edit Url"
-						class="form-control"
-						style="margin-bottom: 2px "
-						name="image_url"
-				/>
-			</div>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
+        <div id="image_div_edit" class="form-group" style="display: none;">
+            <div class="form-group">
+                <input
+                        maxlength="255"
+                        type="text"
+                        size="29"
+                        placeholder="Edit Url"
+                        class="form-control"
+                        style="margin-bottom: 2px "
+                        name="image_url"
+                />
+            </div>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
 
-		<div id="video_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<label for="video_input_edit">Add YouTube video URL</label>
-				<input
-						id="video_input_edit"
-						maxlength="255"
-						type="text"
-						size="29"
-						placeholder="Edit Url"
-						class="form-control"
-						style="margin-bottom: 2px"
-						name="video_url"
-				/>
-			</div>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
+        <div id="video_div_edit" class="form-group" style="display: none;">
+            <div class="form-group">
+                <label for="video_input_edit">Add YouTube video URL</label>
+                <input
+                        id="video_input_edit"
+                        maxlength="255"
+                        type="text"
+                        size="29"
+                        placeholder="Edit Url"
+                        class="form-control"
+                        style="margin-bottom: 2px"
+                        name="video_url"
+                />
+            </div>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
 
-		<div id="link_div_edit" class="form-group" style="display: none;">
-			<select
-					class="selectpicker"
-					data-width="261px"
-					id="edit_selectbox"
-					name="linkedscene"
-			>
+        <div id="link_div_edit" class="form-group" style="display: none;">
+            <select
+                    class="selectpicker"
+                    data-width="261px"
+                    id="edit_selectbox"
+                    name="linkedscene"
+            >
 				<?php if (!empty($scenes)): ?>
 					<?php foreach ($scenes as $scene): ?>
-						<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
+                        <option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
 					<?php endforeach ?>
 				<?php endif; ?>
-			</select>
-			<button
-					type="button"
-					class="btn btn-primary"
-					onclick="saveEdit()"><i class="fas fa-save"></i> Save
-			</button>
-		</div>
-	</div>
-	<div class="popup" data-popup="popup-1">
-		<div class="popup-inner" id="popup">
-			<form class="form-inline">
-				<input type="hidden" id="user_id" value="<?php echo $tour->created_by ?>">
-				<input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
+            </select>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveEdit()"><i class="fas fa-save"></i> Save
+            </button>
+        </div>
+    </div>
+    <div class="popup" data-popup="popup-1">
+        <div class="popup-inner" id="popup">
+            <form class="form-inline">
+                <input type="hidden" id="user_id" value="<?php echo $tour->created_by ?>">
+                <input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
 
-				<button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom"
-				        onclick="addHotspot();">
-					<i class="fas fa-street-view"></i> Add hotspot here
-				</button>
-				<button type="button" id="set_defaultView" class="btn btn-primary btn-sm button-custom"
-				        onclick="setDefaultView();">
-					<i class="fas fa-eye"></i> Set default view
-				</button>
+                <div id="start-actions" class="">
+                    <button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom"
+                            onclick="addHotspot();">
+                        <i class="fas fa-street-view"></i> Add hotspot here
+                    </button>
+                    <button type="button" id="set_defaultView" class="btn btn-primary btn-sm button-custom"
+                            onclick="setDefaultView();">
+                        <i class="fas fa-eye"></i> Set default view
+                    </button>
+                </div>
 
-				<div id="open-add-hot" class="form-inline" style="display: none;">
-					<div class="form-group">
+                <div id="open-add-hot" class="form-inline" style="display: none;">
+                    <div class="form-group">
 
-						<!-- Select type -->
-						<div class="button-group" role="group">
-							<button type="button" id="add_text" class="btn btn-primary btn-sm button-custom"
-							        onclick="addText();">
-								<i class="fas fa-font"></i> Add Text
-							</button>
-							<button type="button" id="add_Tooltip" class="btn btn-primary btn-sm button-custom"
-							        onclick="addTooltip();">
-								<i class="fas fa-info"></i> Add Tooltip
-							</button>
-						</div>
-						<div class="button-group" role="group">
-							<button type="button" id="add_Modal" class="btn btn-primary btn-sm button-custom"
-							        onclick="addModal();">
-								<i class="far fa-window-maximize"></i> Add Modal
-							</button>
-							<button type="button" id="add_image" class="btn btn-primary btn-sm button-custom"
-							        onclick="addImage();">
-								<i class="fas fa-image"></i> Add Image
-							</button>
-						</div>
-						<div class="button-group" role="group">
-							<button type="button" id="add_video" class="btn btn-primary btn-sm button-custom"
-							        onclick="addVideo();">
-								<i class="fas fa-video"></i> Add Video
-							</button>
-							<button type="button" id="add_link" class="btn btn-primary btn-sm button-custom"
-							        onclick="addLink();">
-								<i class="fas fa-link"></i> Add Link a scene
-							</button>
-						</div>
+                        <!-- Select type -->
+                        <div class="button-group" role="group">
+                            <button type="button" id="add_text" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addText();">
+                                <i class="fas fa-font"></i> Add Text
+                            </button>
+                            <button type="button" id="add_Tooltip" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addTooltip();">
+                                <i class="fas fa-info"></i> Add Tooltip
+                            </button>
+                        </div>
+                        <div class="button-group" role="group">
+                            <button type="button" id="add_Modal" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addModal();">
+                                <i class="far fa-window-maximize"></i> Add Modal
+                            </button>
+                            <button type="button" id="add_image" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addImage();">
+                                <i class="fas fa-image"></i> Add Image
+                            </button>
+                        </div>
+                        <div class="button-group" role="group">
+                            <button type="button" id="add_video" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addVideo();">
+                                <i class="fas fa-video"></i> Add Video
+                            </button>
+                            <button type="button" id="add_link" class="btn btn-primary btn-sm button-custom"
+                                    onclick="addLink();">
+                                <i class="fas fa-link"></i> Add Link a scene
+                            </button>
+                        </div>
 
-						<!-- Text-->
-						<div id="text_div" class="form-group" style="display: none;">
-							<div class="form-group">
-								<input
-										id='text_t'
-										maxlength="255"
-										type="text"
-										size="29"
-										placeholder="Enter hotspot title"
-										class="form-control"
-								/>
-							</div>
-							<div class="form-group">
+                        <!-- Text-->
+                        <div id="text_div" class="form-group" style="display: none;">
+                            <div class="form-group">
+                                <input
+                                        id='text_t'
+                                        maxlength="255"
+                                        type="text"
+                                        size="29"
+                                        placeholder="Enter hotspot title"
+                                        class="form-control"
+                                />
+                            </div>
+                            <div class="form-group">
 								<textarea
-										class="form-control"
-										placeholder="Input Description"
-										id="text_text"
-										maxlength="255"
-										style="
+                                        class="form-control"
+                                        placeholder="Input Description"
+                                        id="text_text"
+                                        maxlength="255"
+                                        style="
 								resize: none;
 								width:265px;
 								overflow:hidden;
@@ -305,43 +307,43 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								margin-bottom:2px;
 								height: 155px;
 								"
-								></textarea>
-							</div>
+                                ></textarea>
+                            </div>
 
-							<div class="form-group" style="">
-								<button
-										type="button"
-										id="savehotspots"
-										class="btn btn-primary"
-										onclick="SaveHot('text')"><i class="fas fa-save"></i> Save
-								</button>
-								<button
-										type="button"
-										class="btn btn-danger"
-										onclick="onclickCancel()">Back
-								</button>
-							</div>
-						</div>
+                            <div class="form-group" style="">
+                                <button
+                                        type="button"
+                                        id="savehotspots"
+                                        class="btn btn-primary"
+                                        onclick="SaveHot('text')"><i class="fas fa-save"></i> Save
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-danger"
+                                        onclick="onclickCancel()">Back
+                                </button>
+                            </div>
+                        </div>
 
-						<!-- Tooltip-->
-						<div id="Tooltip_div" class="form-group" style="display: none;">
-							<div class="form-group">
-								<input
-										id='tooltip_t'
-										type="text"
-										maxlength="255"
-										size="29"
-										placeholder="Input Tooltip Title"
-										class="form-control"
-								/>
-							</div>
-							<div class="form-group">
+                        <!-- Tooltip-->
+                        <div id="Tooltip_div" class="form-group" style="display: none;">
+                            <div class="form-group">
+                                <input
+                                        id='tooltip_t'
+                                        type="text"
+                                        maxlength="255"
+                                        size="29"
+                                        placeholder="Input Tooltip Title"
+                                        class="form-control"
+                                />
+                            </div>
+                            <div class="form-group">
 							<textarea
-									class="form-control"
-									placeholder="Input Description"
-									id="tooltip_d"
-									maxlength="255"
-									style="
+                                    class="form-control"
+                                    placeholder="Input Description"
+                                    id="tooltip_d"
+                                    maxlength="255"
+                                    style="
 								resize: none;
 								width:259px;
 								overflow:hidden;
@@ -349,40 +351,40 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								margin-bottom:2px;
 								height: 155px;
 								"
-							></textarea>
-							</div>
-							<br>
-							<button
-									type="button"
-									id="savehotspots"
-									class="btn btn-primary "
-									onclick="SaveHot('tooltip')"><i class="fas fa-save"></i> Save
-							</button>
-							<button
-									type="button"
-									class="btn btn-default"
-									onclick="onclickCancel()">Back
-							</button>
-						</div>
+                            ></textarea>
+                            </div>
+                            <br>
+                            <button
+                                    type="button"
+                                    id="savehotspots"
+                                    class="btn btn-primary "
+                                    onclick="SaveHot('tooltip')"><i class="fas fa-save"></i> Save
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    onclick="onclickCancel()">Back
+                            </button>
+                        </div>
 
-						<!-- Modal-->
-						<div id="modal_div" class="form-group" style="display: none;">
-							<div class="form-group">
-								<input
-										id='modal_t'
-										type="text"
-										size="29"
-										placeholder="Input Modal Title"
-										class="form-control"
-								/>
-							</div>
-							<div class="form-group">
+                        <!-- Modal-->
+                        <div id="modal_div" class="form-group" style="display: none;">
+                            <div class="form-group">
+                                <input
+                                        id='modal_t'
+                                        type="text"
+                                        size="29"
+                                        placeholder="Input Modal Title"
+                                        class="form-control"
+                                />
+                            </div>
+                            <div class="form-group">
 							<textarea
-									class="form-control"
-									placeholder="Input Description"
-									id="modal_d"
-									maxlength="255"
-									style="
+                                    class="form-control"
+                                    placeholder="Input Description"
+                                    id="modal_d"
+                                    maxlength="255"
+                                    style="
 								resize: none;
 								width:259px;
 								overflow:hidden;
@@ -390,175 +392,117 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								margin-bottom:2px;
 								height: 155px;
 								"
-							></textarea>
-							</div>
-							<br>
-							<button
-									type="button"
-									id="savehotspots"
-									class="btn btn-primary"
-									onclick="SaveHot('modal')"><i class="fas fa-save"></i> Save
-							</button>
-							<button
-									type="button"
-									class="btn btn-default"
-									onclick="onclickCancel()">Back
-							</button>
-						</div>
+                            ></textarea>
+                            </div>
+                            <br>
+                            <button
+                                    type="button"
+                                    id="savehotspots"
+                                    class="btn btn-primary"
+                                    onclick="SaveHot('modal')"><i class="fas fa-save"></i> Save
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    onclick="onclickCancel()">Back
+                            </button>
+                        </div>
 
-						<!-- Image-->
-						<div id="image_div" class="form-group" style="display: none;">
-							<div class="form-group">
-								<input
-										id='image_url'
-										maxlength="255"
-										type="text"
-										size="29"
-										placeholder="Image Url"
-										class="form-control"
-										style="margin-bottom: 2px "
-								/>
-							</div>
-							<button
-									type="button"
-									id="savehotspots"
-									class="btn btn-primary"
-									onclick="SaveHot('image')"><i class="fas fa-save"></i> Save
-							</button>
-							<button
-									type="button"
-									class="btn btn-default"
-									onclick="onclickCancel()">Back
-							</button>
-						</div>
-						<!-- Video-->
-						<div id="video_div" class="form-group" style="display: none;">
-							<div class="form-group">
-								<label for="video_url">Add YouTube video URL</label>
-								<input
-										id='video_url'
-										maxlength="255"
-										type="text"
-										size="29"
-										placeholder="Video Url"
-										class="form-control"
-										style="margin-bottom: 5px; margin-top: 5px;"
-								/>
-							</div>
-							<button
-									type="button"
-									id="savehotspots"
-									class="btn btn-primary"
-									onclick="SaveHot('video')"><i class="fas fa-save"></i> Save
-							</button>
-							<button
-									type="button"
-									class="btn btn-default"
-									onclick="onclickCancel()">Back
-							</button>
-						</div>
-						<!-- addLinkScene-->
-						<div id="link_div" class="form-group" style="display: none;">
-							<select
-									class="selectpicker"
-									data-width="261px"
-									id="selectbox"
-							>
+                        <!-- Image-->
+                        <div id="image_div" class="form-group" style="display: none;">
+                            <div class="form-group">
+                                <input
+                                        id='image_url'
+                                        maxlength="255"
+                                        type="text"
+                                        size="29"
+                                        placeholder="Image Url"
+                                        class="form-control"
+                                        style="margin-bottom: 2px "
+                                />
+                            </div>
+                            <button
+                                    type="button"
+                                    id="savehotspots"
+                                    class="btn btn-primary"
+                                    onclick="SaveHot('image')"><i class="fas fa-save"></i> Save
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    onclick="onclickCancel()">Back
+                            </button>
+                        </div>
+                        <!-- Video-->
+                        <div id="video_div" class="form-group" style="display: none;">
+                            <div class="form-group">
+                                <label for="video_url">Add YouTube video URL</label>
+                                <input
+                                        id='video_url'
+                                        maxlength="255"
+                                        type="text"
+                                        size="29"
+                                        placeholder="Video Url"
+                                        class="form-control"
+                                        style="margin-bottom: 5px; margin-top: 5px;"
+                                />
+                            </div>
+                            <button
+                                    type="button"
+                                    id="savehotspots"
+                                    class="btn btn-primary"
+                                    onclick="SaveHot('video')"><i class="fas fa-save"></i> Save
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    onclick="onclickCancel()">Back
+                            </button>
+                        </div>
+                        <!-- addLinkScene-->
+                        <div id="link_div" class="form-group" style="display: none;">
+                            <select
+                                    class="selectpicker"
+                                    data-width="261px"
+                                    id="selectbox"
+                            >
 								<?php if (!empty($scenes)): ?>
 									<?php foreach ($scenes as $scene): ?>
-										<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
+                                        <option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
 									<?php endforeach ?>
 								<?php endif; ?>
-							</select>
-							<input type="hidden" name="selectbox_data"
-							       value="<?php echo htmlspecialchars(json_encode($scenes)); ?>">
-							<button
-									type="button"
-									id="savehotspots"
-									class="btn btn-primary"
-									onclick="SaveHot('linkscene')"><i class="fas fa-save"></i> Save
-							</button>
-							<button
-									type="button"
-									class="btn btn-default button-custom-save-cancel"
-									onclick="onclickCancel()">Back
-							</button>
-						</div>
-					</div>
-				</div>
-				<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-			</form>
-		</div>
-	</div>
+                            </select>
+                            <input type="hidden" name="selectbox_data"
+                                   value="<?php echo htmlspecialchars(json_encode($scenes)); ?>">
+                            <button
+                                    type="button"
+                                    id="savehotspots"
+                                    class="btn btn-primary"
+                                    onclick="SaveHot('linkscene')"><i class="fas fa-save"></i> Save
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-default button-custom-save-cancel"
+                                    onclick="onclickCancel()">Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Close button -->
+                <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+            </form>
+        </div>
+    </div>
 </div>
 <div id="pano">
-	<script type="text/javascript">
+    <script type="text/javascript">
         var allow = true;
 
         function isAllowAddHotspot(isAllowAddHotspot) {
             if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
             allow = isAllowAddHotspot;
         }
-
-        $(function () {
-            var krpano = document.getElementById('krpanoSWFObject');
-            var timeout, clicker = $("#pano");
-            var oldX, oldY;
-            //----- OPEN
-            clicker.mousedown(function (e) {
-                oldX = e.pageX;
-                oldY = e.pageY;
-                if (allow) {
-                    timeout = setInterval(function () {
-                        var targeted_popup_class = jQuery(this).attr('data-popup-open');
-                        $('[data-popup=popup-1]').fadeIn(350);
-                        var x = e.pageX;
-                        var y = e.pageY;
-                        krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-                        $(".popup-inner#popup").css({left: x, top: y});
-                        $(".show-message-for-click").hide();
-                        e.preventDefault();
-                    }, 500);
-
-                    clicker.mousemove(function (event) {
-                        if (event.pageX != oldX || event.pageY != oldY) {
-                            clearInterval(timeout);
-                        }
-                    });
-                }
-                return false;
-            });
-
-            $(document).mouseup(function () {
-                if (allow) {
-                    clearInterval(timeout);
-                }
-                return false;
-            });
-
-            //----- CLOSE
-            $('[data-popup-close]').on('click', function (e) {
-
-                $('#text_div').hide();
-                $('#Tooltip_div').hide();
-                $('#modal_div').hide();
-                $('#video_div').hide();
-                $('#image_div').hide();
-                $('#link_div').hide();
-                $('#open-add-hot').hide();
-                $(".show-message-for-click").show();
-                $('#edit-remove-move').hide();
-                $('#text_div_edit').hide();
-                enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
-                disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
-                enableButton(['#set_defaultView', '#add_hotpost'])
-                enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
-
-                var targeted_popup_class = jQuery(this).attr('data-popup-close');
-                $('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
-                e.preventDefault();
-            });
-        });
 
         embedpano({
             swf: '<?php echo $tourUrl . '/tour.swf'; ?>',
@@ -664,7 +608,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
             selectbox_data.forEach(function (elm, i) {
                 option_scene = 'scene_' + elm.file.split('.')[0];
                 if (option_scene != current_scene) {
-                    let option = `<option value="${option_scene}">${elm.name}</option>`;
+                    var option = `<option value="${option_scene}">${elm.name}</option>`;
                     $("#selectbox").append(option);
                     $("#edit_selectbox").append(option);
                 }
@@ -724,12 +668,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
         }
 
         function saveEdit() {
-            let _hotspot = krpano.get('hotspot[' + uniqname + ']');
-            let _type = _hotspot.hotspot_type;
+            var _hotspot = krpano.get('hotspot[' + uniqname + ']');
+            var _type = _hotspot.hotspot_type;
 
             $('#' + _type + '_div_edit').find('textarea, input, select').each(function () {
-                let param_name = $(this).attr('name');
-                let param_val = $(this).val();
+                var param_name = $(this).attr('name');
+                var param_val = $(this).val();
                 if (param_name == 'video_url') {
                     if (param_val.indexOf('https://www.youtube.com/') !== 0
                         && param_val.indexOf('https://youtube.com/') !== 0) {
@@ -856,7 +800,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
         }
 
         function editHotspot() {
-            disableButton(['#move_hotspot', '#delete_hotpost', '#edit_hotpost']);
+            disableButton(['#move_hotspot', '#devare_hotpost', '#edit_hotpost']);
             $('[id*="_div_edit"][data-edit="true"]').show();
         }
 
@@ -879,7 +823,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
             removedHotspot.push(name);
         }
 
-        function deleteHotspot() {
+        function devareHotspot() {
             if (confirm("Are you  Sure? ") == true) {
                 $("[data-popup-close]").trigger("click");
                 done_remove();
@@ -1011,8 +955,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
         function showPopup(uniqn) {
             uniqname = uniqn;
-            let _hotspot = krpano.get('hotspot[' + uniqname + ']');
-            let _type = _hotspot.hotspot_type;
+            var _hotspot = krpano.get('hotspot[' + uniqname + ']');
+            var _type = _hotspot.hotspot_type;
 
             enableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
             $("#edit-remove-move").show();
@@ -1021,7 +965,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
             $('#' + _type + '_div_edit').attr('data-edit', true);
 
             $('#' + _type + '_div_edit').find('textarea, input, select').each(function () {
-                let param_name = $(this).attr('name');
+                var param_name = $(this).attr('name');
                 $(this).val(_hotspot[param_name]);
             });
         }
@@ -1169,84 +1113,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
         setTimeout(function () {
             superHotspot = new superHotspotObj(krpano);
         }, 500);
-	</script>
+    </script>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.selectpicker').selectpicker();
-    });
-
-    var text_textarea = $('#text_text').sceditor({
-        resizeEnabled: false,
-        format: 'bbcode',
-        icons: 'monocons',
-        resizeMaxWidth: '265px',
-        emoticonsRoot: '/assets/redactor/',
-        style: 'assets/redactor/minified/themes/content/default.min.css'
-    }).sceditor('instance');
-
-    var htmlToBBCode = function (html) {
-
-        html = html.replace(/<pre(.*?)>(.*?)<\/pre>/gmi, "[code]$2[/code]");
-
-        html = html.replace(/<h[1-7](.*?)>(.*?)<\/h[1-7]>/, "\n[h]$2[/h]\n");
-
-        //paragraph handling:
-        //- if a paragraph opens on the same line as another one closes, insert an extra blank line
-        //- opening tag becomes two line breaks
-        //- closing tags are just removed
-        // html += html.replace(/<\/p><p/<\/p>\n<p/gi;
-        // html += html.replace(/<p[^>]*>/\n\n/gi;
-        // html += html.replace(/<\/p>//gi;
-
-        html = html.replace(/<br(.*?)>/gi, "\n");
-        html = html.replace(/<textarea(.*?)>(.*?)<\/textarea>/gmi, "\[code]$2\[\/code]");
-        html = html.replace(/<b>/gi, "[b]");
-        html = html.replace(/<i>/gi, "[i]");
-        html = html.replace(/<u>/gi, "[u]");
-        html = html.replace(/<\/b>/gi, "[/b]");
-        html = html.replace(/<\/i>/gi, "[/i]");
-        html = html.replace(/<\/u>/gi, "[/u]");
-        html = html.replace(/<em>/gi, "[b]");
-        html = html.replace(/<\/em>/gi, "[/b]");
-        html = html.replace(/<strong>/gi, "[b]");
-        html = html.replace(/<\/strong>/gi, "[/b]");
-        html = html.replace(/<cite>/gi, "[i]");
-        html = html.replace(/<\/cite>/gi, "[/i]");
-        html = html.replace(/<font color="(.*?)">(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
-        html = html.replace(/<font color=(.*?)>(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
-        html = html.replace(/<link(.*?)>/gi, "");
-        html = html.replace(/<li(.*?)>(.*?)<\/li>/gi, "[*]$2");
-        html = html.replace(/<ul(.*?)>/gi, "[list]");
-        html = html.replace(/<\/ul>/gi, "[/list]");
-        html = html.replace(/<div>/gi, "\n");
-        html = html.replace(/<\/div>/gi, "\n");
-        html = html.replace(/<td(.*?)>/gi, " ");
-        html = html.replace(/<tr(.*?)>/gi, "\n");
-
-        html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/gi, "[img]$2[/img]");
-        html = html.replace(/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/gi, "[url=$2]$4[/url]");
-
-        html = html.replace(/<head>(.*?)<\/head>/gmi, "");
-        html = html.replace(/<object>(.*?)<\/object>/gmi, "");
-        html = html.replace(/<script(.*?)>(.*?)<\/script>/gmi, "");
-        html = html.replace(/<style(.*?)>(.*?)<\/style>/gmi, "");
-        html = html.replace(/<title>(.*?)<\/title>/gmi, "");
-        html = html.replace(/<!--(.*?)-->/gmi, "\n");
-
-        html = html.replace(/\/\//gi, "/");
-        html = html.replace(/http:\//gi, "http://");
-
-        html = html.replace(/<(?:[^>'"]*|(['"]).*?\1)*>/gmi, "");
-        html = html.replace(/\r\r/gi, "");
-        html = html.replace(/\[img]\//gi, "[img]");
-        html = html.replace(/\[url=\//gi, "[url=");
-
-        html = html.replace(/(\S)\n/gi, "$1 ");
-
-        return html;
-    }
-
-</script>
+<script type="text/javascript" src="./assets/js/admin/hotspots.js"></script>
 </body>
 </html>

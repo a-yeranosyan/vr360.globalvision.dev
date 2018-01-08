@@ -470,8 +470,7 @@
 		addNew: function () {
 			var sceneHtml = $(".hidden .scene").parent().html();
 
-			$("#scenes .alert").remove();
-			$("#scenes").append(sceneHtml);
+			$(sceneHtml).insertAfter('#scenes .scene');
 
 			$.validate({
 				modules: "file"
