@@ -13,8 +13,7 @@
 	<div class="form-group">
 		<textarea
 				class="form-control"
-				placeholder="Input Description"
-				id="text_text"
+				id="hotspot-text-editor"
 				maxlength="255"
 				style="
 					resize: none;
@@ -28,17 +27,5 @@
 		</textarea>
 	</div>
 
-	<div class="form-group" style="">
-		<button
-				type="button"
-				id="savehotspots"
-				class="btn btn-primary"
-				onclick="SaveHot('text')"><i class="fas fa-save"></i> Save
-		</button>
-		<button
-				type="button"
-				class="btn btn-danger"
-				onclick="onclickCancel()">Back
-		</button>
-	</div>
+	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'text')); ?>
 </div>

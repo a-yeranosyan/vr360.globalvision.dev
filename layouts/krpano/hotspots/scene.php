@@ -5,23 +5,12 @@
 		data-width="261px"
 		id="selectbox"
 	>
-		<?php if (!empty($scenes)): ?>
+		<?php if (!empty($scenes) && count ($scenes) > 1): ?>
 			<?php foreach ($scenes as $scene): ?>
 				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
 			<?php endforeach ?>
 		<?php endif; ?>
 	</select>
-	<input type="hidden" name="selectbox_data"
-	       value="<?php echo htmlspecialchars(json_encode($scenes)); ?>">
-	<button
-		type="button"
-		id="savehotspots"
-		class="btn btn-primary"
-		onclick="SaveHot('linkscene')"><i class="fas fa-save"></i> Save
-	</button>
-	<button
-		type="button"
-		class="btn btn-default button-custom-save-cancel"
-		onclick="onclickCancel()">Back
-	</button>
+	<input type="hidden" name="selectbox_data" value="<?php echo htmlspecialchars(json_encode($scenes)); ?>">
+	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'linkscene')); ?>
 </div>

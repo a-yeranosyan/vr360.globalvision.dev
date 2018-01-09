@@ -1,4 +1,5 @@
 <krpano>
+    <!-- Scene type -->
     <style
             name="hotspot_style_linkedscene"
             crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"
@@ -12,12 +13,7 @@
                   asyncloop(hovering, copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
             onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[scene_parent].visible,false), copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
     />
-    <action name="hotspot_animate">
-        inc(frame,1,get(lastframe),0);
-        mul(ypos,frame,frameheight);
-        txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
-        delayedcall(0.1, if(loaded, hotspot_animate() ) );
-    </action>
+
     <action name="skin_hotspotstyle_click" scope="local">
         if(caller.linkedscene,
         copy(hs_linkedscene, caller.linkedscene);
@@ -32,6 +28,7 @@
         );
         );
     </action>
+
     <layer name="scene_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
            width="140" height="120" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
         <layer name="tooltip_image_scene" type="image" url="" keep="false" align="lefttop" x="10" y="10" width="240"
@@ -49,6 +46,7 @@
                html=""
         />
     </layer>
+
     <action name="skin_loadscene" scope="local" args="newscenenameorindex, blendmode">
         if(webvr.isenabled AND scene.count GT 1,
         set(hotspot[skin_webvr_prev_scene].visible, false);
@@ -60,6 +58,7 @@
         get(scene[get(newscenenameorindex)].thumby));
         loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
     </action>
+
     <action name="hotspot_animate">
         inc(frame,1,get(lastframe),0);
         mul(ypos,frame,frameheight);
@@ -67,7 +66,7 @@
         delayedcall(0.1, if(loaded, hotspot_animate() ) );
     </action>
 
-    <!-- text -->
+    <!-- Text type -->
     <style
             name="hotspot_style_text"
             type="text"
@@ -149,6 +148,7 @@
                height="120"
                oy="-5"/>
     </layer>
+
     <action name="text_load_action">
         txtadd(layer[tooltip_text].html,get(tooltip_title),'[br]',get(tooltip_content));
     </action>
@@ -266,8 +266,8 @@
     </layer>
 
     <security cors="">
-        <crossdomainxml url="*" />
+        <crossdomainxml url="*"/>
 
-        <allowdomain domain="*" />
+        <allowdomain domain="*"/>
     </security>
 </krpano>

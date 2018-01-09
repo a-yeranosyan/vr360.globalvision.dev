@@ -12,15 +12,5 @@
 				style="margin-bottom: 5px; margin-top: 5px;"
 		/>
 	</div>
-	<button
-			type="button"
-			id="savehotspots"
-			class="btn btn-primary"
-			onclick="SaveHot('video')"><i class="fas fa-save"></i> Save
-	</button>
-	<button
-			type="button"
-			class="btn btn-default"
-			onclick="onclickCancel()">Back
-	</button>
+	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'video')); ?>
 </div>

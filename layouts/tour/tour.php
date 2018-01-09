@@ -41,6 +41,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 		/>
 	<?php endif; ?>
 
+	<!-- Default skin -->
 	<skin_settings maps="false"
 	               maps_type="google"
 	               maps_bing_api_key=""
@@ -92,10 +93,10 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               design_text_shadow="1"
 	/>
 
-	<!-- Use for override everything -->
 	<!-- Skin override only -->
 	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
 
+	<!-- User logo -->
 	<?php if ($tour->params->get('userlogo') && $tour->getUser()->haveLogo()): ?>
 		<layer name="user_logo" type="container" keep="true" x="16" y="60">
 			<layer name="logo" type="image" url="<?php echo $tour->getUser()->getLogoUrl(); ?>"
@@ -109,6 +110,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 		if(startactions !== null, startactions() );
 	</action>
 
+	<!-- Social -->
 	<?php if ($tour->params->get('socials', false) == 1): ?>
 		<include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/social-skin.xml"/>
 	<?php endif; ?>
