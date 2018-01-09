@@ -158,11 +158,11 @@ class Vr360ModelTour extends Vr360Model
 		{
 			if ($input->getInt('id'))
 			{
-				Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('TOUR_NOTICE_TOUR_IS_UPDATED', $tour->get('id')), 'success');
+				Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('TOUR_NOTICE_TOUR_IS_UPDATED', $tour->get('name') . ' - ' . $tour->get('id')), 'success');
 			}
 			else
 			{
-				Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('TOUR_NOTICE_TOUR_IS_CREATED', $tour->get('id')), 'success');
+				Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('TOUR_NOTICE_TOUR_IS_CREATED', $tour->get('name') . ' - ' . $tour->get('id')), 'success');
 			}
 
 			Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::_('TOUR_NOTICE_SCENES_UPDATED'), 'info');

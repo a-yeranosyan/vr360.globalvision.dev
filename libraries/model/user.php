@@ -61,7 +61,7 @@ class Vr360ModelUser extends Vr360Model
 		}
 
 		$row->params = !(empty($row->params)) ? new Vr360Object(json_decode($row->params)) : new Vr360Object;
-		$user        = new Vr360TableUser;
+		$user        = new Vr360User;
 		$user->bind($row);
 
 		return $user;
