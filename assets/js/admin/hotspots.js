@@ -1,3 +1,29 @@
+function disableButton(elements) {
+    if (jQuery.isArray(elements)) {
+        jQuery.each(elements, function (index, element) {
+            jQuery(element).attr('disabled', 'disabled');
+            jQuery(element).hide();
+        })
+    }
+    else {
+        jQuery(elements).attr('disabled', 'disabled');
+        jQuery(elements).hide();
+    }
+}
+
+function enableButton(elements) {
+    if (jQuery.isArray(elements)) {
+        jQuery.each(elements, function (index, element) {
+            jQuery(element).removeAttr('disabled');
+            jQuery(element).show();
+        })
+    }
+    else {
+        jQuery(element).removeAttr('disabled');
+        jQuery(element).show();
+    }
+}
+
 $(function () {
     var krpano = document.getElementById('krpanoSWFObject');
     var timeout, clicker = $("#pano");
@@ -65,10 +91,9 @@ $(document).ready(function () {
 var text_textarea = $('#text_text').sceditor({
     resizeEnabled: false,
     format: 'bbcode',
-    icons: 'monocons',
     resizeMaxWidth: '265px',
-    emoticonsRoot: '/assets/redactor/',
-    style: 'assets/redactor/minified/themes/content/default.min.css'
+    emoticonsRoot: '/assets/vendor/sceditor/',
+    style: 'assets/vendor/sceditor/minified/themes/content/default.min.css'
 }).sceditor('instance');
 
 var htmlToBBCode = function (html) {
