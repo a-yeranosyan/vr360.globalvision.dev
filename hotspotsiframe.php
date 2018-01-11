@@ -63,6 +63,40 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			Delete
 		</button>
 		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+		<div id="show-info" class="form-group" style="display: none;">
+						<div class="form-group">
+							<div class="form-group">
+								<input
+								id='text_t'
+								maxlength="255"
+								type="text"
+								size="29"
+								placeholder="Input Info Title"
+								class="form-control"
+								/>
+							</div>
+							<textarea
+								class="form-control"
+								placeholder="Input Info Description"
+								id="text_text"
+								maxlength="255"
+								style="
+								resize: none;
+								width:265px;
+								overflow:hidden;
+								margin-top:2px;
+								margin-bottom:2px;
+								height: 155px;
+								"
+							></textarea>
+						</div>
+						<button
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot('info')">Save
+						</button>
+					</div>
 		<div id="text_div_edit" class="form-group" style="display: none;">
 			<div class="form-group">
 				<input
@@ -470,6 +504,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 <div id="pano" >
 	<script type="text/javascript">
 		var allow = true;
+        window.x;
+        window.y;
 		function isAllowAddHotspot(isAllowAddHotspot){
 			if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
 			allow = isAllowAddHotspot;
@@ -486,8 +522,16 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 					timeout = setInterval(function(){
 						var targeted_popup_class = jQuery(this).attr('data-popup-open');
 						$('[data-popup=popup-1]').fadeIn(350);
-						var x = e.pageX ;
-						var y = e.pageY;
+						x = e.pageX ;
+						y = e.pageY;
+                        var windowWidth = $( window ).width();
+                        var windowHeight = $( window ).height();
+                        console.log(windowWidth);
+                        console.log(windowHeight);
+                        if(x>990){
+                            x = 980;
+                            // alert(1);
+                        }
 						krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 						$(".popup-inner#popup").css({left: x, top: y});
 						$(".show-message-for-click").hide();
@@ -523,6 +567,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			$(".show-message-for-click").show();
 			$('#edit-remove-move').hide();
 			$('#text_div_edit').hide();
+			$('#show-info').hide();
 			enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
 			disableButton(['#edit_text','#edit_Tooltip','#edit_modal','#edit_image','#edit_video','#edit_link'])
 			enableButton(['#set_defaultView', '#add_hotpost'])
@@ -595,37 +640,47 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function addText(){
-		// alert(1);
-		// alert(uniqname);
-		disableButton(['#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link' ]);
-			$("#text_div").show();
+            if( y > 300){
+                y = 300;
+            }
+        disableButton(['#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link' ]);
+            $("#text_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 
 		}
 
 		function addModal(){
-		disableButton(['#add_Tooltip', '#add_text', '#add_image', '#add_video' ,'#add_link' ,'#savehotspots' ]);
-			$("#modal_div").show();
+            if( y > 300){
+                y = 300;
+            }
+        disableButton(['#add_Tooltip', '#add_text', '#add_image', '#add_video' ,'#add_link' ,'#savehotspots' ]);
+            $("#modal_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 		}
 
 		function addTooltip(){
-		disableButton(['#add_Modal', '#add_text', '#add_image', '#add_video' ,'#add_link' ,'#savehotspots' ]);
-			$("#Tooltip_div").show();
+			disableButton(['#add_Modal', '#add_text', '#add_image', '#add_video' ,'#add_link' ,'#savehotspots' ]);
+            $("#Tooltip_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 		}
 
 		function addImage(){
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_video' ,'#add_link' ,'#savehotspots' ]);
 			$("#image_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 		}
 
 		function addVideo(){
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_image' ,'#add_link' ,'#savehotspots' ]);
 			$("#video_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 		}
 
 		function addLink(){
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_image' ,'#add_video' ,'#savehotspots' ]);
 			removeCurrentSceneFromSelect();
 			$("#link_div").show();
+            $(".popup-inner#popup").css({left: x, top: y});
 		}
 
 		function removeCurrentSceneFromSelect(){
@@ -759,12 +814,11 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				// var text_text =  text_textarea.val();
 				var text_text = $(text_textarea.getBody()).html();
 				text_text = htmlToBBCode(text_text);
-				console.log(text_text);
 
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/text.png);");
 				$("#text_t").val('');
 				$("#text_text").val('');
 			}
@@ -774,7 +828,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
 				krpano.call("set(hotspot[" + uniqname + "].modal_title, "+modal_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].modal_content, "+modal_d+" ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/modal.png);");
 				$("#modal_t").val('');
 				$("#modal_d").val('');
 			}
@@ -784,7 +838,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, "+tooltip_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, "+tooltip_d+" ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/tooltip.png);");
 				$("#tooltip_t").val('');
 				$("#tooltip_d").val('');
 			}
@@ -797,7 +851,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
 				krpano.call("set(hotspot[" + uniqname + "].video_url, "+videourl+" ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/video.png);");
 				$("#video_url").val('');
 			}
 
@@ -810,7 +864,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
 				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/image.png);");
 				$("#image_url").val('');
 			}
 
@@ -818,7 +872,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var scene = $("#selectbox").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
 				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png);");
 				$("#selectbox").selectpicker('reset');
 			}
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
@@ -929,44 +983,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			}
 		}
 
-		function hmv(currentHotspot, currentScene, i) {
-
-// 				if (typeof currentHotspot !== "object") return false;
-// 				var hotspotList = superHotspot.hotspotList;
-// 				//var sceneName = this.kr.get('xml.scene');
-// 				var sceneName = currentScene;
-// 				var currentHotspotData = {};
-// 				currentHotspotData.ath = currentHotspot.ath;
-// 				currentHotspotData.atv = currentHotspot.atv;
-// 				currentHotspotData.hotspot_type = currentHotspot.hotspot_type;
-// 				currentHotspotData.sceneName    = sceneName;
-// 				currentHotspotData.reRender     = 'true';
-
-// 				if ( typeof currentHotspot.linkedscene != 'undefined')
-// 					currentHotspotData.linkedscene = currentHotspot.linkedscene;
-// 				else if ( typeof currentHotspot.hotspot_text != 'undefined' )
-// 					currentHotspotData.hotspot_text = currentHotspot.hotspot_text;
-// 				else
-// 					console.error('no hotspot data found: ');
-
-// 				console.info (currentHotspotData);
-
-// 				current_vTour_hotspot_counter++;
-// 				hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = currentHotspotData;
-
-			//if hotspot just live in js var ( not live in xml yet )
-			if (currentHotspot.url == 'assets/images/hotspot.png') {
-				//hm... do nothing, it's auto re-locate itself
-			}
-			else // it live in xml, and will auto-reload-by krpano, so we need to
-			{
-				//1. add it to removed list
-				addRemovedHotspot(currentHotspot.name);
-				//2. make it render - able
-				krpano.call("set(hotspot[" + i + "].xreRender, 'true')");
-			}
-		}
-
 		function editHotspots() {
 			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup()););");
@@ -978,9 +994,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			for (var i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
 			}
-
-			// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-			// krpano.call("set(hotspot[" + uniqname + "].ondown, draghotspot(););");
 			disableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
 		}
 
@@ -1001,15 +1014,11 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			});
 		}
 
-		// function moveHotspotDone() {
-		// 	enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
-		// 	// var hotspot_count = getHotspotsCount();
-		// 	// for (var i = 0; i < hotspot_count; i++) {
-		// 	// 	krpano.call("set(hotspot[" + i + "].ondown, '');");
-		// 	// }
-		// 	$("#moveHotspot").show();
-		// 	$("#moveHotspotDone").hide();
-		// }
+		function showInfo(){
+			disableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
+			$("#edit-remove-move").show();
+			$('#show-info').show();
+		}
 
 		/**
 		 *
@@ -1039,7 +1048,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
 
 				for (var i = 0; i < hotspot_count; i++) {
-					// if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 						thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
 							'ath': thisAlias.kr.get('hotspot[' + i + '].ath'),
 							'atv': thisAlias.kr.get('hotspot[' + i + '].atv'),
@@ -1047,15 +1055,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 							'hotspot_type': thisAlias.kr.get('hotspot[' + i + '].hotspot_type'),
 							'reRender': 'true'
 						}
-						// if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
-							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
 							if (thisAlias.kr.get('hotspot[' + i + '].xreRender') == 'true') {
 								thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'
 							}
 							else{
 								thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender = 'false';
 							}
-						// }
 
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
 							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
@@ -1112,7 +1117,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				if (true) {
 					thisAlias.saveCurrentHotspotFromCurrentScene();
 				}
-				// if(thisAlias.firstTimesSave == 0){thisAlias.saveCurrentHotspotFromCurrentScene();}
 				return thisAlias;
 			};
 
@@ -1132,9 +1136,14 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				i = k;
 			}
 
+			this.initCurrentInfo = function () {
+				krpano.call("set(layer[skin_btn_info].onclick,  js(showInfo()););");
+			}
+
 			this.init = function() {
 				setTimeout(function() {
 					thisAlias.initCurrentHotspots();
+					thisAlias.initCurrentInfo();
 				}, 500);
 			}
 			this.init();
@@ -1168,15 +1177,6 @@ var htmlToBBCode = function(html) {
   html = html.replace(/<pre(.*?)>(.*?)<\/pre>/gmi, "[code]$2[/code]");
 
 	html = html.replace(/<h[1-7](.*?)>(.*?)<\/h[1-7]>/, "\n[h]$2[/h]\n");
-
-	//paragraph handling:
-	//- if a paragraph opens on the same line as another one closes, insert an extra blank line
-	//- opening tag becomes two line breaks
-	//- closing tags are just removed
-	// html += html.replace(/<\/p><p/<\/p>\n<p/gi;
-	// html += html.replace(/<p[^>]*>/\n\n/gi;
-	// html += html.replace(/<\/p>//gi;
-
 	html = html.replace(/<br(.*?)>/gi, "\n");
 	html = html.replace(/<textarea(.*?)>(.*?)<\/textarea>/gmi, "\[code]$2\[\/code]");
 	html = html.replace(/<b>/gi, "[b]");
@@ -1201,27 +1201,21 @@ var htmlToBBCode = function(html) {
 	html = html.replace(/<\/div>/gi, "\n");
 	html = html.replace(/<td(.*?)>/gi, " ");
 	html = html.replace(/<tr(.*?)>/gi, "\n");
-
 	html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/gi, "[img]$2[/img]");
 	html = html.replace(/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/gi, "[url=$2]$4[/url]");
-
 	html = html.replace(/<head>(.*?)<\/head>/gmi, "");
 	html = html.replace(/<object>(.*?)<\/object>/gmi, "");
 	html = html.replace(/<script(.*?)>(.*?)<\/script>/gmi, "");
 	html = html.replace(/<style(.*?)>(.*?)<\/style>/gmi, "");
 	html = html.replace(/<title>(.*?)<\/title>/gmi, "");
 	html = html.replace(/<!--(.*?)-->/gmi, "\n");
-
 	html = html.replace(/\/\//gi, "/");
 	html = html.replace(/http:\//gi, "http://");
-
 	html = html.replace(/<(?:[^>'"]*|(['"]).*?\1)*>/gmi, "");
 	html = html.replace(/\r\r/gi, "");
 	html = html.replace(/\[img]\//gi, "[img]");
 	html = html.replace(/\[url=\//gi, "[url=");
-
 	html = html.replace(/(\S)\n/gi, "$1 ");
-
 	return html;
 }
 
