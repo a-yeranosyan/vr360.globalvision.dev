@@ -29,7 +29,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 ?>
 <krpano version="1.19" title="Virtual Tour">
 	<?php foreach ($includes as $include): ?>
-		<include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/<?php echo $include; ?>"/>
+		<!-- <include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/<?php echo $include; ?>"/> -->
 	<?php endforeach; ?>
 
 	<?php if ($tour->params->get('rotation', false)): ?>
