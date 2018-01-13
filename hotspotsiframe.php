@@ -5,7 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
+$tourUrl           = str_replace('/hotspotsiframe.php','', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
 
 $tour = new Vr360Tour;
 $tour->load(
@@ -17,6 +17,7 @@ $tour->load(
 
 $tours  = new Vr360ModelTours;
 $scenes = !$tour->id ? array() : $tour->getScenes();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,23 +69,23 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		</button>
 		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
 		<div id="show-info" class="form-group" style="display: none;">
-						<div class="form-group">
-							<div class="form-group">
-								<input
-								id='text_t'
-								maxlength="255"
-								type="text"
-								size="29"
-								placeholder="Input Info Title"
-								class="form-control"
-								/>
-							</div>
-							<textarea
-								class="form-control"
-								placeholder="Input Info Description"
-								id="text_text"
-								maxlength="255"
-								style="
+			<div class="form-group">
+				<div class="form-group">
+					<input
+							id='text_t'
+							maxlength="255"
+							type="text"
+							size="29"
+							placeholder="Input Info Title"
+							class="form-control"
+					/>
+				</div>
+				<textarea
+						class="form-control"
+						placeholder="Input Info Description"
+						id="text_text"
+						maxlength="255"
+						style="
 								resize: none;
 								width:265px;
 								overflow:hidden;
@@ -92,15 +93,15 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								margin-bottom:2px;
 								height: 155px;
 								"
-							></textarea>
-						</div>
-						<button
-								type="button"
-								id="savehotspots"
-								class="btn btn-default "
-								onclick="SaveHot('info')">Save
-						</button>
-					</div>
+				></textarea>
+			</div>
+			<button
+					type="button"
+					id="savehotspots"
+					class="btn btn-default "
+					onclick="SaveHot('info')">Save
+			</button>
+		</div>
 		<div id="text_div_edit" class="form-group" style="display: none;">
 			<div class="form-group">
 				<input
@@ -298,85 +299,87 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </div>
 <div id="pano">
 	<script type="text/javascript">
-		var allow = true;
+        var allow = true;
         window.x;
         window.y;
-		function isAllowAddHotspot(isAllowAddHotspot){
-			if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
-			allow = isAllowAddHotspot;
-		}
-		$(function() {
-			var krpano = document.getElementById('krpanoSWFObject');
-			var timeout, clicker = $("#pano");
-			var oldX, oldY;
-			//----- OPEN
-			clicker.mousedown(function(e){
-				oldX = e.pageX;
-				oldY = e.pageY;
-				if (allow) {
-					timeout = setInterval(function(){
-						var targeted_popup_class = jQuery(this).attr('data-popup-open');
-						$('[data-popup=popup-1]').fadeIn(350);
-						x = e.pageX ;
-						y = e.pageY;
-                        var windowWidth = $( window ).width();
-                        var windowHeight = $( window ).height();
-                        if(x>990){
+
+        function isAllowAddHotspot(isAllowAddHotspot) {
+            if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
+            allow = isAllowAddHotspot;
+        }
+
+        $(function () {
+            var krpano = document.getElementById('krpanoSWFObject');
+            var timeout, clicker = $("#pano");
+            var oldX, oldY;
+            //----- OPEN
+            clicker.mousedown(function (e) {
+                oldX = e.pageX;
+                oldY = e.pageY;
+                if (allow) {
+                    timeout = setInterval(function () {
+                        var targeted_popup_class = jQuery(this).attr('data-popup-open');
+                        $('[data-popup=popup-1]').fadeIn(350);
+                        x = e.pageX;
+                        y = e.pageY;
+                        var windowWidth = $(window).width();
+                        var windowHeight = $(window).height();
+                        if (x > 990) {
                             x = 980;
                         }
-						krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-						$(".popup-inner#popup").css({left: x, top: y});
-						$(".show-message-for-click").hide();
-						e.preventDefault();
-					}, 500);
+                        krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+                        $(".popup-inner#popup").css({left: x, top: y});
+                        $(".show-message-for-click").hide();
+                        e.preventDefault();
+                    }, 500);
 
-					clicker.mousemove(function(event){
-						if (event.pageX != oldX || event.pageY != oldY) {
-						clearInterval(timeout);
-						}
-					});
-				}
-				return false;
-			});
+                    clicker.mousemove(function (event) {
+                        if (event.pageX != oldX || event.pageY != oldY) {
+                            clearInterval(timeout);
+                        }
+                    });
+                }
+                return false;
+            });
 
-			$(document).mouseup(function(){
-				if (allow) {
-					clearInterval(timeout);
-				}
-				return false;
-			});
+            $(document).mouseup(function () {
+                if (allow) {
+                    clearInterval(timeout);
+                }
+                return false;
+            });
 
-		    //----- CLOSE
-			$('[data-popup-close]').on('click', function(e)  {
+            //----- CLOSE
+            $('[data-popup-close]').on('click', function (e) {
 
-			$('#text_div').hide();
-			$('#Tooltip_div').hide();
-			$('#modal_div').hide();
-			$('#video_div').hide();
-			$('#image_div').hide();
-			$('#link_div').hide();
-			$('#open-add-hot').hide();
-			$(".show-message-for-click").show();
-			$('#edit-remove-move').hide();
-			$('#text_div_edit').hide();
-			$('#show-info').hide();
-			enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
-			disableButton(['#edit_text','#edit_Tooltip','#edit_modal','#edit_image','#edit_video','#edit_link'])
-			enableButton(['#set_defaultView', '#add_hotpost'])
-			enableButton(['#add_text','#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link']);
+                $('#text_div').hide();
+                $('#Tooltip_div').hide();
+                $('#modal_div').hide();
+                $('#video_div').hide();
+                $('#image_div').hide();
+                $('#link_div').hide();
+                $('#open-add-hot').hide();
+                $(".show-message-for-click").show();
+                $('#edit-remove-move').hide();
+                $('#text_div_edit').hide();
+                $('#show-info').hide();
+                enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
+                disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
+                enableButton(['#set_defaultView', '#add_hotpost'])
+                enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
 
-			var targeted_popup_class = jQuery(this).attr('data-popup-close');
-			$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
-			e.preventDefault();
-			});
-		});
-		embedpano({
-			swf: '<?php echo $tourUrl . '/tour.swf'; ?>',
-			xml: '<?php echo $tourUrl . '/tour.xml?' . time(); ?>',
-			target: "pano",
-			html5: "prefer",
-			passQueryParameters: true
-		});
+                var targeted_popup_class = jQuery(this).attr('data-popup-close');
+                $('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
+                e.preventDefault();
+            });
+        });
+        embedpano({
+            swf: '<?php echo $tourUrl . '/tour.swf'; ?>',
+            xml: '<?php echo $tourUrl . '/tour.xml?' . time(); ?>',
+            target: "pano",
+            html5: "prefer",
+            passQueryParameters: true
+        });
 	</script>
 </div>
 <script type="text/javascript" src="./assets/js/admin/hotspots.min.js"></script>
