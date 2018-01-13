@@ -38,10 +38,11 @@
 						</tr>
 						</thead>
 						<tbody>
+						<?php $url = str_replace('/index.php', '', VR360_URL_FULL_WITHOUT_PARAMS); ?>
 						<?php foreach ($this->tours as $tour): ?>
 							<?php
 							/** @var Vr360Tour $tour */
-							$tourUrl = VR360_URL_ROOT . '/_/' . $tour->id;
+							$tourUrl = $url . '/_/' . $tour->id;
 							?>
 							<tr
 									id='vtour-<?php echo $tour->id; ?>'
@@ -130,7 +131,7 @@
 									<?php if ($tour->canPreview()): ?>
 										<!-- Preview -->
 										<a type="button" class="btn btn-info tour-preview" target="_blank"
-										   href="/<?php echo $tour->alias ?>">
+										   href="<?php echo $url . '/' . $tour->alias ?>">
 											<i class="fas fa-desktop"></i> <?php echo \Joomla\Language\Text::_('TOURS_LABEL_PREVIEW'); ?>
 										</a>
 									<?php endif; ?>
