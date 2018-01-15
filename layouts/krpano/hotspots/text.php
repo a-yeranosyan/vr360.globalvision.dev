@@ -1,8 +1,8 @@
 <!-- Text-->
-<div id="text_div" class="form-group" style="display: none;">
+<div id="hotspot-form-text" class="form-group" style="display: none;">
 	<div class="form-group">
 		<input
-				id='text_t'
+				id='text-title-editor'
 				maxlength="255"
 				type="text"
 				size="29"
@@ -13,7 +13,7 @@
 	<div class="form-group">
 		<textarea
 				class="form-control"
-				id="hotspot-text-editor"
+				id="text-description-editor"
 				maxlength="255"
 				style="
 					resize: none;
@@ -23,9 +23,7 @@
 					margin-bottom:2px;
 					height: 155px;
 					"
-		>
-		</textarea>
+		></textarea>
 	</div>
-
 	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'text')); ?>
 </div>
