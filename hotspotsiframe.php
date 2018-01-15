@@ -3,7 +3,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
+$tourUrl           = str_replace('/hotspotsiframe.php','', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
 $tour = new Vr360Tour;
 $tour->load(
 	array(
@@ -13,6 +13,7 @@ $tour->load(
 );
 $tours  = new Vr360ModelTours;
 $scenes = !$tour->id ? array() : $tour->getScenes();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -107,6 +108,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			html5: "prefer",
 			passQueryParameters: true
 		});
+
 	</script>
 </div>
 <script type="text/javascript" src="./assets/js/admin/hotspots.min.js"></script>
