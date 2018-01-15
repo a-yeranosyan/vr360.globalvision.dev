@@ -143,7 +143,6 @@
                mergedalpha="true"
                interactivecontent="false"
                onautosized=""
-               width="140"
                oy="-30" scale="0.5" />
     </layer>
 <action name="text_load_action">

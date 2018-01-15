@@ -2,7 +2,7 @@
 <div id="hotspot-form-tooltip" class="" style="display: none;">
 	<div class="form-group">
 		<input
-				id='tooltip_t'
+				id='tooltip-title-editor'
 				type="text"
 				maxlength="255"
 				size="29"
@@ -11,7 +11,7 @@
 		/>
 	</div>
 	<div class="form-group">
-		<textarea class="form-control" id="tooltip_d"></textarea>
+		<textarea class="form-control" id="tooltip-description-editor"></textarea>
 	</div>
 
 	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'tooltip')); ?>

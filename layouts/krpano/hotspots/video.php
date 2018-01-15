@@ -1,9 +1,9 @@
 <!-- Video-->
-<div id="video_div" class="form-group" style="display: none;">
+<div id="hotspot-form-video" class="form-group" style="display: none;">
 	<div class="form-group">
 		<label for="video_url">Add YouTube video URL</label>
 		<input
-				id='video_url'
+				id='video-url-editor'
 				maxlength="255"
 				type="text"
 				size="29"
