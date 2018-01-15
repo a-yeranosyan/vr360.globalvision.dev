@@ -400,14 +400,14 @@ function showPopup(uniqn) {
  *
  * @returns {boolean}
  */
-// function isReady() {
-// 	if (
-// 		add_hotpost.disabled == false
-// 	) {
-// 		return true;
-// 	}
-// 	return false;
-// }
+function isReady() {
+	// if (
+	// 	add_hotpost.disabled == false
+	// ) {
+		return true;
+	// }
+	// return false;
+}
 
 function superHotspotObj(krpano_Obj) {
 	var thisAlias = this;
