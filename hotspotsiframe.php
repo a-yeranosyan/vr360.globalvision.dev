@@ -3,7 +3,8 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = str_replace('/hotspotsiframe.php','', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
+$tourUrl           = str_replace('/hotspotsiframe.php', '', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
+
 $tour = new Vr360Tour;
 $tour->load(
 	array(
@@ -74,21 +75,25 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 				<?php echo Vr360Layout::getInstance()->fetch('krpano.actions'); ?>
 
-				<div id="open-add-hot" class="" style="display: none;">
-					<div class="form-group">
-						<div class="hotspot-types">
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots', array('scenes' => $scenes)); ?>
-						</div>
-
-						<div class="hotspot-type-forms">
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.text'); ?>
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.tooltip'); ?>
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.modal'); ?>
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.image'); ?>
-							<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.video'); ?>
-							<?php if (!empty($scenes)): ?>
-								<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.scene', array('scenes' => $scenes)); ?>
-							<?php endif; ?>
+				<div class="row">
+					<div id="choose-hotspot-type" class="" style="display: none;">
+						<div class="container-fluid">
+							<div class="form-group">
+								<!-- Choose type -->
+								<div class="hotspot-types">
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots', array('scenes' => $scenes)); ?>
+								</div>
+								<div class="hotspot-type-forms">
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.text'); ?>
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.tooltip'); ?>
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.modal'); ?>
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.image'); ?>
+									<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.video'); ?>
+									<?php if (!empty($scenes)): ?>
+										<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.scene', array('scenes' => $scenes)); ?>
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -108,9 +113,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			html5: "prefer",
 			passQueryParameters: true
 		});
-
 	</script>
 </div>
-<script type="text/javascript" src="./assets/js/admin/hotspots.min.js"></script>
+<script type="text/javascript" src="./assets/js/admin/hotspots.js"></script>
 </body>
 </html>

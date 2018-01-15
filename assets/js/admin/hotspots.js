@@ -39,141 +39,11 @@ function enableButton(elements) {
  * @returns {boolean}
  */
 function saveHotspot(el) {
-	var type = jQuery(el).data('hotspot-type');
 
-	if (type == '') {
-		return false;
-	}
-
-	i += 1;
-	uniqname = "spot_new_" + i;
-
-	// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-	var scene_num = krpano.get('scene.count');
-	var current_scene = krpano.get('xml.scene');
-	var posX = krpano.get('m_ath');
-	var posY = krpano.get('m_atv');
-
-	// hotspots[uniqname] = r; //JSON.parse(r);
-	krpano.call("addhotspot(" + uniqname + ");");
-
-	if (typeof currentHotspotData == 'undefined') {
-		currentHotspotData = {};
-		currentHotspotData.ath = krpano.get('view.hlookat');
-		currentHotspotData.atv = krpano.get('view.vlookat');
-	}
-	else {
-		// THIS HOTSPOT HAVE ADDITIONAL DATA FROM HOTSPOT LIST
-
-		// if (currentHotspotData.hotspot_type == 'normal') {
-		// 	krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-		// }
-		// if (currentHotspotData.hotspot_type == 'text') {
-		// 	krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
-		// }
-	}
-
-	switch (type) {
-		case 'text':
-			var text_t = $("#text_t").val();
-			var text_text = $(textEditor.getBody()).html();
-
-			text_text = htmlToBBCode(text_text);
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_title, " + text_t + " ");
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_content, " + text_text + " ");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
-
-			// Reset text
-			$("#text_t").val('');
-			$("#text_text").val('');
-
-			break;
-		case 'modal':
-			var modal_t = $("#modal_t").val();
-			var modal_d = $("#modal_d").val();
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-			krpano.call("set(hotspot[" + uniqname + "].modal_title, " + modal_t + " ");
-			krpano.call("set(hotspot[" + uniqname + "].modal_content, " + modal_d + " ");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
-
-			$("#modal_t").val('');
-			$("#modal_d").val('');
-
-			break;
-		case 'tooltip':
-			var tooltip_t = $("#tooltip_t").val();
-			var tooltip_d = $("#tooltip_d").val();
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-			krpano.call("set(hotspot[" + uniqname + "].tooltip_title, " + tooltip_t + " ");
-			krpano.call("set(hotspot[" + uniqname + "].tooltip_content, " + tooltip_d + " ");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
-
-			$("#tooltip_t").val('');
-			$("#tooltip_d").val('');
-
-			break;
-		case 'video':
-			var videourl = $("#video_url").val();
-
-			if (videourl.length > 500 || (videourl.indexOf('https://www.youtube.com/') !== 0
-					&& videourl.indexOf('https://youtube.com/') !== 0)) {
-				alert('Invalid video URL');
-				return false;
-			}
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
-			krpano.call("set(hotspot[" + uniqname + "].video_url, " + videourl + " ");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
-
-			$("#video_url").val('');
-
-			break;
-		case 'image':
-			var imageurl = $("#image_url").val();
-
-			if (image_url.length > 500 || (imageurl.indexOf('https://') !== 0
-					&& imageurl.indexOf('http://') !== 0)) {
-				alert('Invalid image URL');
-				return false;
-			}
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
-			krpano.call("set(hotspot[" + uniqname + "].image_url, " + imageurl + " ");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
-
-			$("#image_url").val('');
-
-			break;
-		case 'linkscene':
-			var scene = $("#selectbox").val();
-
-			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
-			krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
-
-			$("#selectbox").selectpicker('reset');
-			break;
-	}
-
-	krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
-	krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
-	krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
-	krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
-	krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
-	krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-
-	$("[data-popup-close]").trigger("click");
 }
 
 function addHotspotType(el) {
-	var showForm = jQuery(el).data('form');
-	disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
 
-	jQuery('#' + showForm).show();
 }
 
 ////edit
@@ -210,117 +80,14 @@ function editScene() {
 
 
 function onclickCancel() {
-	$("#text_div").hide();
-	$("#modal_div").hide();
-	$("#hotspot-form-tooltip").hide();
-	$("#image_div").hide();
-	$("#video_div").hide();
-	$("#link_div").hide();
-	enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link', '#savehotspots']);
+
 }
-
-(function (w, $) {
-
-	if (typeof w.vrAdmin === 'undefined') {
-		w.vrAdmin = {};
-	}
-
-	var vrKrpano = {
-		_elements: {
-			noticeMessage: '.notice-message'
-		},
-
-		showActions: function () {
-			var krpano = document.getElementById('krpanoSWFObject');
-			var timeout, clicker = $("#pano");
-			var oldX, oldY;
-
-			//----- OPEN
-			clicker.mousedown(function (e) {
-				oldX = e.pageX;
-				oldY = e.pageY;
-
-				if (allow) {
-					timeout = setInterval(function () {
-						var targeted_popup_class = jQuery(this).attr('data-popup-open');
-						$('[data-popup=popup-1]').fadeIn(350);
-						var x = e.pageX;
-						var y = e.pageY;
-						krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-						$(".popup-inner#popup").css({left: x, top: y});
-
-						$('.notice-message').hide();
-
-						e.preventDefault();
-					}, 250);
-
-					clicker.mousemove(function (event) {
-						if (event.pageX != oldX || event.pageY != oldY) {
-							clearInterval(timeout);
-						}
-					});
-				}
-
-				return false;
-			});
-
-			$(document).mouseup(function () {
-				if (allow) {
-					clearInterval(timeout);
-				}
-				return false;
-			});
-
-			//----- CLOSE
-			$('[data-popup-close]').on('click', function (e) {
-
-				$('#text_div').hide();
-				$('#hotspot-form-tooltip').hide();
-				$('#modal_div').hide();
-				$('#video_div').hide();
-				$('#image_div').hide();
-				$('#link_div').hide();
-
-				$('#open-add-hot').hide();
-
-				$('.notice-message').show();
-
-				$('#edit-remove-move').hide();
-				$('#text_div_edit').hide();
-
-				enableButton(['#edit_hotpost', '#move_hotspot', '#devare_hotpost'])
-				disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
-				enableButton(['#set_defaultView', '#add_hotpost'])
-				enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
-
-				var targeted_popup_class = jQuery(this).attr('data-popup-close');
-				$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
-				e.preventDefault();
-			});
-		},
-
-		hook: {},
-
-		init: function () {
-			vrKrpano.showActions();
-			$('.selectpicker').selectpicker();
-		}
-	};
-
-	w.vrAdmin.Krpano = vrKrpano;
-
-	$(document).ready(function () {
-		vrKrpano.init();
-	});
-
-})(window, jQuery);
-
 
 var textEditor = $('#hotspot-text-editor').sceditor({
 	resizeEnabled: false,
 	format: 'bbcode',
 	resizeMaxWidth: '265px',
-	emoticonsRoot: '/assets/vendor/sceditor/',
+	emoticonsRoot: 'assets/vendor/sceditor/',
 	style: 'assets/vendor/sceditor/minified/themes/content/default.min.css',
 	plugins: 'autoyoutube'
 }).sceditor('instance');
@@ -411,11 +178,6 @@ function getHotspotsCount() {
 	return krpano.get('hotspot.count');
 }
 
-function addHotspot(currentHotspotData) {
-	disableButton(['#set_defaultView', '#add_hotpost']);
-	$('#open-add-hot').show();
-}
-
 function saveEdit() {
 	var _hotspot = krpano.get('hotspot[' + uniqname + ']');
 	var _type = _hotspot.hotspot_type;
@@ -483,7 +245,7 @@ function devareHotspot() {
 }
 
 function done_remove() {
-	enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set_defaultView'])
+	enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set-default-view'])
 	krpano.call("removehotspot(" + uniqname + ");");
 }
 
@@ -522,7 +284,7 @@ function hotspot_add_done() {
 	$('#show_link').hide();
 	add_hotpost.disabled = false;
 
-	enableButton(['#remove_hotpost', '#moveHotspot', '#set_defaultView']);
+	enableButton(['#remove_hotpost', '#moveHotspot', '#set-default-view']);
 }
 
 var defaultViewList = {};
@@ -600,7 +362,7 @@ function moveHotspot() {
 
 	// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 	// krpano.call("set(hotspot[" + uniqname + "].ondown, draghotspot(););");
-	disableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
+	disableButton(['#add-hotspot', '#remove_hotpost', '#set-default-view'])
 }
 
 function showPopup(uniqn) {
@@ -608,7 +370,7 @@ function showPopup(uniqn) {
 	var _hotspot = krpano.get('hotspot[' + uniqname + ']');
 	var _type = _hotspot.hotspot_type;
 
-	enableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
+	enableButton(['#add-hotspot', '#remove_hotpost', '#set-default-view'])
 	$("#edit-remove-move").show();
 
 	$('[id*="_div_edit"]').attr('data-edit', false).hide();
@@ -621,7 +383,7 @@ function showPopup(uniqn) {
 }
 
 // function moveHotspotDone() {
-// 	enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
+// 	enableButton(['add_hotpost', '#remove_hotpost', '#set-default-view'])
 // 	// var hotspot_count = getHotspotsCount();
 // 	// for (var i = 0; i < hotspot_count; i++) {
 // 	// 	krpano.call("set(hotspot[" + i + "].ondown, '');");
@@ -763,3 +525,295 @@ var superHotspot;
 setTimeout(function () {
 	superHotspot = new superHotspotObj(krpano);
 }, 500);
+
+(function (w, $) {
+	var vrKrpano = {
+		element: {
+			btnAddHotspot: '#add-hotspot',
+			btnSetDefaultView: '#set-default-view',
+			noticeMessage: '.notice-message',
+			krpano: '#pano',
+		},
+		krpano: document.getElementById('krpanoSWFObject')
+	}
+
+	/**
+	 * Add a krpano element
+	 *
+	 * @param elObject
+	 * @param elType
+	 */
+	vrKrpano.add = function (elObject, elType) {
+		var krpano = vrKrpano.krpano;
+
+		switch (elType) {
+			case 'hotspot':
+				krpano.call('addhotspot(' + elObject.name + ');');
+
+
+				break;
+		}
+
+		$.each(elObject, function (key, value) {
+			if (key != 'name') {
+				krpano.call('set(hotspot[' + elObject.name + '].' + key + ',' + value + ');');
+			}
+		});
+
+		krpano.call("set(hotspot[" + elObject.name + "].onclick,  js(showPopup(" + elObject.name + ")););");
+		// @TODO Do we really need this attribute
+		krpano.call("set(hotspot[" + elObject.name + "].onover,  js(isAllowAddHotspot(false)););");
+		// @TODO Do we really need this attribute
+		krpano.call("set(hotspot[" + elObject.name + "].onout,  js(isAllowAddHotspot(true)););");
+		krpano.call("set(hotspot[" + elObject.name + "].ath, " + krpano.get('m_ath') + ");");
+		krpano.call("set(hotspot[" + elObject.name + "].sceneName, " + krpano.get('xml.scene') + ");");
+		krpano.call("set(hotspot[" + elObject.name + "].atv, " + krpano.get('m_atv') + ");");
+	}
+
+	vrKrpano.clickAction = function () {
+		var krpano = document.getElementById('krpanoSWFObject');
+		var timeout, clicker = $(vrKrpano.element.krpano);
+		var oldX, oldY;
+
+		//----- OPEN
+		clicker.mousedown(function (e) {
+			oldX = e.pageX;
+			oldY = e.pageY;
+
+			if (allow) {
+				timeout = setInterval(function () {
+					var targeted_popup_class = jQuery(this).attr('data-popup-open');
+					$('[data-popup=popup-1]').fadeIn(350);
+					var x = e.pageX;
+					var y = e.pageY;
+					krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+					$(".popup-inner#popup").css({left: x, top: y});
+
+					$('.notice-message').hide();
+
+					e.preventDefault();
+				}, 250);
+
+				clicker.mousemove(function (event) {
+					if (event.pageX != oldX || event.pageY != oldY) {
+						clearInterval(timeout);
+					}
+				});
+			}
+
+			return false;
+		});
+
+		$(document).mouseup(function () {
+			if (allow) {
+				clearInterval(timeout);
+			}
+			return false;
+		});
+
+		//----- CLOSE
+		$('[data-popup-close]').on('click', function (e) {
+
+			$('#text_div').hide();
+			$('#hotspot-form-tooltip').hide();
+			$('#modal_div').hide();
+			$('#video_div').hide();
+			$('#image_div').hide();
+			$('#link_div').hide();
+
+			$('#choose-hotspot-type').hide();
+
+			$('.notice-message').show();
+
+			$('#edit-remove-move').hide();
+			$('#text_div_edit').hide();
+
+			enableButton(['#edit_hotpost', '#move_hotspot', '#devare_hotpost'])
+			disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
+			enableButton(['#set-default-view', '#add-hotspot'])
+			enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+
+			var targeted_popup_class = jQuery(this).attr('data-popup-close');
+			$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
+			e.preventDefault();
+		});
+	};
+
+	/**
+	 * Show add hotspot types
+	 */
+	vrKrpano.showHotspotTypes = function () {
+		disableButton([vrKrpano.element.btnAddHotspot, vrKrpano.element.btnSetDefaultView]);
+
+		$('#choose-hotspot-type').show();
+	}
+
+	/**
+	 * Show a hotspot form
+	 *
+	 * @param el
+	 * @param value
+	 */
+	vrKrpano.showHotspotForm = function (el, value) {
+		var showForm = jQuery(el).data('form');
+
+		disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+
+		jQuery('#' + showForm).show();
+	}
+
+	vrKrpano.closeHotspotForm = function () {
+		disableButton(['#text_div', '#modal_div', '#hotspot-form-tooltip', '#image_div', '#video_div', '#link_div'])
+		enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link', '#savehotspots']);
+	}
+	/**
+	 * Save an hotspot
+	 *
+	 * @param el
+	 * @returns {boolean}
+	 */
+	vrKrpano.saveHotspot = function (el) {
+		var type = jQuery(el).data('hotspot-type');
+
+		if (type == '') {
+			return false;
+		}
+
+		i += 1;
+		uniqname = "spot_new_" + i;
+
+		// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+		var scene_num = krpano.get('scene.count');
+		var current_scene = krpano.get('xml.scene');
+		var posX = krpano.get('m_ath');
+		var posY = krpano.get('m_atv');
+
+		// hotspots[uniqname] = r; //JSON.parse(r);
+		//krpano.call("addhotspot(" + uniqname + ");");
+
+		if (typeof currentHotspotData == 'undefined') {
+			currentHotspotData = {};
+			currentHotspotData.ath = krpano.get('view.hlookat');
+			currentHotspotData.atv = krpano.get('view.vlookat');
+		}
+		else {
+			// THIS HOTSPOT HAVE ADDITIONAL DATA FROM HOTSPOT LIST
+
+			// if (currentHotspotData.hotspot_type == 'normal') {
+			// 	krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
+			// }
+			// if (currentHotspotData.hotspot_type == 'text') {
+			// 	krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
+			// }
+		}
+
+		switch (type) {
+			case 'text':
+				var text_t = $("#text_t").val();
+				var text_text = $(textEditor.getBody()).html();
+
+				text_text = htmlToBBCode(text_text);
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, " + text_t + " ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, " + text_text + " ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+
+				// Reset text
+				$("#text_t").val('');
+				$("#text_text").val('');
+
+				break;
+			case 'modal':
+				var modal_t = $("#modal_t").val();
+				var modal_d = $("#modal_d").val();
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
+				krpano.call("set(hotspot[" + uniqname + "].modal_title, " + modal_t + " ");
+				krpano.call("set(hotspot[" + uniqname + "].modal_content, " + modal_d + " ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
+
+				$("#modal_t").val('');
+				$("#modal_d").val('');
+
+				break;
+			case 'tooltip':
+				var tooltip_t = $("#tooltip_t").val();
+				var tooltip_d = $("#tooltip_d").val();
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, " + tooltip_t + " ");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, " + tooltip_d + " ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
+
+				$("#tooltip_t").val('');
+				$("#tooltip_d").val('');
+
+				break;
+			case 'video':
+				var videourl = $("#video_url").val();
+
+				if (videourl.length > 500 || (videourl.indexOf('https://www.youtube.com/') !== 0
+						&& videourl.indexOf('https://youtube.com/') !== 0)) {
+					alert('Invalid video URL');
+					return false;
+				}
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
+				krpano.call("set(hotspot[" + uniqname + "].video_url, " + videourl + " ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
+
+				$("#video_url").val('');
+
+				break;
+			case 'image':
+				var imageurl = $("#image_url").val();
+
+				if (image_url.length > 500 || (imageurl.indexOf('https://') !== 0
+						&& imageurl.indexOf('http://') !== 0)) {
+					alert('Invalid image URL');
+					return false;
+				}
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
+				krpano.call("set(hotspot[" + uniqname + "].image_url, " + imageurl + " ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
+
+				$("#image_url").val('');
+
+				break;
+			case 'linkscene':
+				var scene = $("#selectbox").val();
+
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
+				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+
+				$("#selectbox").selectpicker('reset');
+				break;
+		}
+
+		krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
+		krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
+		krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
+		krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
+		krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
+		krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
+
+		$("[data-popup-close]").trigger("click");
+	}
+
+	vrKrpano.init = function () {
+		vrKrpano.clickAction();
+
+		$('.selectpicker').selectpicker();
+
+
+	}
+
+	$(document).ready(function () {
+		vrKrpano.init();
+	});
+
+	w.vrKrpano = vrKrpano;
+})(window, jQuery.noConflict())
