@@ -1,5 +1,5 @@
 <!-- addLinkScene-->
-<div id="link_div" class="form-group" style="display: none;">
+<div id="hotspot-form-link" class="form-group" style="display: none;">
 	<select
 		class="selectpicker"
 		data-width="261px"

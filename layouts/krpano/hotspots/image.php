@@ -1,8 +1,8 @@
 <!-- Image-->
-<div id="image_div" class="form-group" style="display: none;">
+<div id="hotspot-form-image" class="form-group" style="display: none;">
 	<div class="form-group">
 		<input
-			id='image_url'
+			id='image-url-editor'
 			maxlength="255"
 			type="text"
 			size="29"
