@@ -1,5 +1,9 @@
 var allow = true;
 
+function removeTags(t) {
+    return t = t.replace('"', "'")
+}
+
 function isAllowAddHotspot(isAllowAddHotspot) {
 	if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
 	allow = isAllowAddHotspot;
@@ -167,9 +171,9 @@ var showlink = document.getElementById('show_link');
 var i = 0;
 var hotspots = {};
 var uniqname = '';
-var scene_nums = krpano.get('scene.count');
+// var scene_nums = krpano.get('scene.count');
 var hotspotList = [];
-var current_scene = '';
+// var current_scene = '';
 var current_vTour_hotspot_counter = 0;
 var current_randome_val = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
 
@@ -397,12 +401,12 @@ function showPopup(uniqn) {
  * @returns {boolean}
  */
 function isReady() {
-	if (
-		add_hotpost.disabled == false
-	) {
+	// if (
+	// 	add_hotpost.disabled == false
+	// ) {
 		return true;
-	}
-	return false;
+	// }
+	// return false;
 }
 
 function superHotspotObj(krpano_Obj) {
@@ -614,12 +618,12 @@ setTimeout(function () {
 		//----- CLOSE
 		$('[data-popup-close]').on('click', function (e) {
 
-			$('#text_div').hide();
+			$('#hotspot-form-text').hide();
 			$('#hotspot-form-tooltip').hide();
-			$('#modal_div').hide();
-			$('#video_div').hide();
-			$('#image_div').hide();
-			$('#link_div').hide();
+			$('#hotspot-form-modal').hide();
+			$('#hotspot-form-video').hide();
+			$('#hotspot-form-image').hide();
+			$('#hotspot-form-link').hide();
 
 			$('#choose-hotspot-type').hide();
 
@@ -669,138 +673,48 @@ setTimeout(function () {
 	/**
 	 * Save an hotspot
 	 *
-	 * @param el
+	 * @param t
 	 * @returns {boolean}
 	 */
-	vrKrpano.saveHotspot = function (el) {
-		var type = jQuery(el).data('hotspot-type');
-
-		if (type == '') {
-			return false;
-		}
-
-		i += 1;
-		uniqname = "spot_new_" + i;
-
-		// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-		var scene_num = krpano.get('scene.count');
-		var current_scene = krpano.get('xml.scene');
-		var posX = krpano.get('m_ath');
-		var posY = krpano.get('m_atv');
-
-		// hotspots[uniqname] = r; //JSON.parse(r);
-		//krpano.call("addhotspot(" + uniqname + ");");
-
-		if (typeof currentHotspotData == 'undefined') {
-			currentHotspotData = {};
-			currentHotspotData.ath = krpano.get('view.hlookat');
-			currentHotspotData.atv = krpano.get('view.vlookat');
-		}
-		else {
-			// THIS HOTSPOT HAVE ADDITIONAL DATA FROM HOTSPOT LIST
-
-			// if (currentHotspotData.hotspot_type == 'normal') {
-			// 	krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-			// }
-			// if (currentHotspotData.hotspot_type == 'text') {
-			// 	krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
-			// }
-		}
-
-		switch (type) {
-			case 'text':
-				var text_t = $("#text_t").val();
-				var text_text = $(textEditor.getBody()).html();
-
-				text_text = htmlToBBCode(text_text);
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, " + text_t + " ");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, " + text_text + " ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
-
-				// Reset text
-				$("#text_t").val('');
-				$("#text_text").val('');
-
-				break;
-			case 'modal':
-				var modal_t = $("#modal_t").val();
-				var modal_d = $("#modal_d").val();
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-				krpano.call("set(hotspot[" + uniqname + "].modal_title, " + modal_t + " ");
-				krpano.call("set(hotspot[" + uniqname + "].modal_content, " + modal_d + " ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
-
-				$("#modal_t").val('');
-				$("#modal_d").val('');
-
-				break;
-			case 'tooltip':
-				var tooltip_t = $("#tooltip_t").val();
-				var tooltip_d = $("#tooltip_d").val();
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, " + tooltip_t + " ");
-				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, " + tooltip_d + " ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
-
-				$("#tooltip_t").val('');
-				$("#tooltip_d").val('');
-
-				break;
-			case 'video':
-				var videourl = $("#video_url").val();
-
-				if (videourl.length > 500 || (videourl.indexOf('https://www.youtube.com/') !== 0
-						&& videourl.indexOf('https://youtube.com/') !== 0)) {
-					alert('Invalid video URL');
-					return false;
-				}
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
-				krpano.call("set(hotspot[" + uniqname + "].video_url, " + videourl + " ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
-
-				$("#video_url").val('');
-
-				break;
-			case 'image':
-				var imageurl = $("#image_url").val();
-
-				if (image_url.length > 500 || (imageurl.indexOf('https://') !== 0
-						&& imageurl.indexOf('http://') !== 0)) {
-					alert('Invalid image URL');
-					return false;
-				}
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
-				krpano.call("set(hotspot[" + uniqname + "].image_url, " + imageurl + " ");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
-
-				$("#image_url").val('');
-
-				break;
-			case 'linkscene':
-				var scene = $("#selectbox").val();
-
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
-				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
-				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
-
-				$("#selectbox").selectpicker('reset');
-				break;
-		}
-
-		krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
-		krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
-		krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
-		krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
-		krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
-		krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-
-		$("[data-popup-close]").trigger("click");
+	vrKrpano.saveHotspot = function (t) {
+	    var e = jQuery(t).data("hotspot-type");
+	    if ("" == e) return !1;
+	    i += 1, uniqname = "spot_new_" + i;
+	    var o = (krpano.get("scene.count"), krpano.get("xml.scene")),
+	        n = krpano.get("m_ath"),
+	        a = krpano.get("m_atv");
+	    switch (krpano.call("addhotspot(" + uniqname + ");"), "undefined" == typeof currentHotspotData && (currentHotspotData = {}, currentHotspotData.ath = krpano.get("view.hlookat"), currentHotspotData.atv = krpano.get("view.vlookat")), e) {
+	        case "text":
+	            var s = removeTags($("#text-title-editor").val()),
+	                r = removeTags($("#text-description-editor").val());
+	            if ($("#text-title-editor").val().length < 1) return alert("Enter title"), !1;
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);"), krpano.call("set(hotspot[" + uniqname + "].hotspot_title, '" + s + "' "), krpano.call("set(hotspot[" + uniqname + "].hotspot_content, '" + r + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/text.png);"), $("#text-title-editor").val(""), $("#text-description-editor").val("");
+	            break;
+	        case "modal":
+	            var p = removeTags($("#modal-title-editor").val()),
+	                l = removeTags($("#modal-description-editor").val());
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);"), krpano.call("set(hotspot[" + uniqname + "].modal_title, '" + p + "' "), krpano.call("set(hotspot[" + uniqname + "].modal_content, '" + l + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/modal.png);"), $("#modal-title-editor").val(""), $("#modal-description-editor").val("");
+	            break;
+	        case "tooltip":
+	            var d = removeTags($("#text-title-editor").val()),
+	                u = removeTags($("#tooltip-description-editor").val());
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);"), krpano.call("set(hotspot[" + uniqname + "].tooltip_title, '" + d + "' "), krpano.call("set(hotspot[" + uniqname + "].tooltip_content, '" + u + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/tooltip.png);"), $("#text-title-editor").val(""), $("#tooltip-description-editor").val("");
+	            break;
+	        case "video":
+	            var c = $("#video-url-editor").val();
+	            if (c.length > 500 || 0 !== c.indexOf("https://www.youtube.com/") && 0 !== c.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);"), krpano.call("set(hotspot[" + uniqname + "].video_url, '" + c + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/video.png);"), $("#video-url-editor").val("");
+	            break;
+	        case "image":
+	            var h = $("#image-url-editor").val();
+	            if (image_url.length > 500 || 0 !== h.indexOf("https://") && 0 !== h.indexOf("http://")) return alert("Invalid image URL"), !1;
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);"), krpano.call("set(hotspot[" + uniqname + "].image_url, '" + h + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/image.png);"), $("#image-url-editor").val("");
+	            break;
+	        case "linkscene":
+	            var m = removeTags($("#selectbox").val());
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);"), krpano.call("set(hotspot[" + uniqname + "].linkedscene, '" + m + "');"), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png);"), $("#selectbox").selectpicker("reset")
+	    }
+	    krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););"), krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););"), krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););"), krpano.call("set(hotspot[" + uniqname + "].ath, " + n + ");"), krpano.call("set(hotspot[" + uniqname + "].sceneName, " + o + ");"), krpano.call("set(hotspot[" + uniqname + "].atv, " + a + ");"), $("[data-popup-close]").trigger("click")
 	}
 
 	vrKrpano.init = function () {
