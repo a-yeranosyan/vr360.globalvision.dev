@@ -4,6 +4,7 @@
 		class="selectpicker"
 		data-width="261px"
 		id="selectbox"
+		name="linkedscene"
 	>
 		<?php if (!empty($scenes) && count ($scenes) > 1): ?>
 			<?php foreach ($scenes as $scene): ?>

@@ -3,12 +3,12 @@
 	<div class="form-group">
 		<input
 			id='image-url-editor'
-			maxlength="255"
 			type="text"
 			size="29"
 			placeholder="Image Url"
 			class="form-control"
 			style="margin-bottom: 2px "
+			name="image_url"
 		/>
 	</div>
 	<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.buttons', array('type'=>'image')); ?>
