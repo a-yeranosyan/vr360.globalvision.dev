@@ -31,12 +31,6 @@
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>
 
-	<!-- Sceditor -->
-	<link rel="stylesheet" href="../../../assets/redactor/minified/themes/default.min.css" id="theme-style" />
-	<script src="../../../assets/redactor/minified/sceditor.min.js"></script>
-	<script src="../../../assets/redactor/minified/icons/monocons.js"></script>
-	<script src="../../../assets/redactor/minified/formats/bbcode.js"></script>
-
 	<?php require_once __DIR__ . '/default_socials.php'; ?>
 </head>
 <body>
@@ -53,11 +47,7 @@
 				</tr>
 			</table>
 		</noscript>
-		<script type="text/javascript">
-			window.onload = function () {
-				<?php echo $tour->getKrpanoEmbedPano(); ?>
-			}
-		</script>
+		<?php echo Vr360Layout::getInstance()->fetch('krpano.krpano', array('tour' => $tour)); ?>
 	</div>
 <?php endif; ?>
 </body>
