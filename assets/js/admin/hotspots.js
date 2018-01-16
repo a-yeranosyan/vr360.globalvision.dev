@@ -176,39 +176,6 @@ function addHotspotType(el) {
 	jQuery('#' + showForm).show();
 }
 
-////edit
-function editText() {
-	disableButton(['#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link', '#saveEdit']);
-	$("#text_div_edit").show();
-}
-
-function editTooltip() {
-	disableButton(['#edit_text', '#edit_modal', '#edit_image', '#edit_video', '#edit_link', '#saveEdit']);
-	$("#tooltip_div_edit").show();
-}
-
-function editModal() {
-	disableButton(['#edit_text', '#edit_Tooltip', '#edit_image', '#edit_video', '#edit_link', '#saveEdit']);
-	$("#modal_div_edit").show();
-}
-
-
-function editImage() {
-	disableButton(['#edit_text', '#edit_modal', '#edit_Tooltip', '#edit_video', '#edit_link', '#saveEdit']);
-	$("#image_div_edit").show();
-}
-
-function editVideo() {
-	disableButton(['#edit_text', '#edit_modal', '#edit_Tooltip', '#edit_image', '#edit_link', '#saveEdit']);
-	$("#video_div_edit").show();
-}
-
-function editScene() {
-	disableButton(['#edit_text', '#edit_modal', '#edit_Tooltip', '#edit_image', '#edit_video', '#saveEdit']);
-	$("#scene_div_edit").show();
-}
-
-
 function onclickCancel() {
 	$("#text_div").hide();
 	$("#modal_div").hide();
@@ -229,6 +196,10 @@ function onclickCancel() {
 		_elements: {
 			noticeMessage: '.notice-message'
 		},
+		/**
+		 * Krpano object
+		 */
+		krpano: document.getElementById('krpanoSWFObject'),
 
 		showActions: function () {
 			var krpano = document.getElementById('krpanoSWFObject');
@@ -288,7 +259,7 @@ function onclickCancel() {
 				$('#edit-remove-move').hide();
 				$('#text_div_edit').hide();
 
-				enableButton(['#edit_hotpost', '#move_hotspot', '#devare_hotpost'])
+				enableButton(['#hotspot-edit', '#move_hotspot', '#devare_hotpost'])
 				disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
 				enableButton(['#set_defaultView', '#add_hotpost'])
 				enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
@@ -299,11 +270,22 @@ function onclickCancel() {
 			});
 		},
 
+		showEditHotspotForm: function () {
+			disableButton(['#move_hotspot', '#devare_hotpost', '#hotspot-edit']);
+
+			$('[id*="_div_edit"][data-edit="true"]').show();
+		},
+
 		hook: {},
 
 		init: function () {
+
 			vrKrpano.showActions();
+
 			$('.selectpicker').selectpicker();
+
+			// Disable rotate in edit mode
+			vrKrpano.krpano.call("autorotate.stop()")
 		}
 	};
 
@@ -389,8 +371,6 @@ var htmlToBBCode = function (html) {
 }
 
 var krpano = document.getElementById('krpanoSWFObject');
-// Disable autoratate;
-krpano.call("autorotate.stop()")
 
 var add_hotpost = document.getElementById('add_hotpost');
 var hotspot_done = document.getElementById('add_text');
@@ -448,11 +428,6 @@ function saveEdit() {
 	$("[data-popup-close]").trigger("click");
 }
 
-
-function editHotspot() {
-	disableButton(['#move_hotspot', '#devare_hotpost', '#edit_hotpost']);
-	$('[id*="_div_edit"][data-edit="true"]').show();
-}
 
 function list_scene() {
 	krpano.call("set(hotspot[" + uniqname + "].ondown, '');");

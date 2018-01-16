@@ -3,8 +3,8 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = str_replace('/hotspotsiframe.php','', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
-$tour = new Vr360Tour;
+$tourUrl           = str_replace('/hotspotsiframe.php', '', VR360_URL_FULL_WITHOUT_PARAMS) . '/_/' . $tourId . '/vtour';
+$tour              = new Vr360Tour;
 $tour->load(
 	array(
 		'id'         => $tourId,
@@ -29,7 +29,10 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 
 	<script type="text/javascript" src="./assets/vendor/jquery-2.2.4.min.js"></script>
-	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
+
+	<!-- Krpano -->
+	<script src="<?php echo $tour->getKrpanoJsUrl(); ?>"></script>
+
 	<!-- Bootstrap -->
 	<script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
@@ -51,17 +54,17 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		<strong><?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_HOLD_CLICK'); ?></strong>
 	</div>
 	<div class="popup-inner" id="edit-remove-move" style="display:none;">
-		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-for-edit"
-		        onclick="editHotspot();">
-			Edit
+		<button type="button" id="hotspot-edit" class="btn btn-primary btn-sm button-for-edit"
+		        onclick="vrAdmin.Krpano.showEditHotspotForm();">
+			<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_EDIT'); ?>
 		</button>
 		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-for-edit"
 		        onclick="moveHotspot();">
-			Move
+			<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_MOVE'); ?>
 		</button>
 		<button type="button" id="devare_hotpost" class="btn btn-primary btn-sm button-for-edit"
 		        onclick="devareHotspot();">
-			Devare
+			<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_DELETE'); ?>
 		</button>
 		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
 		<!-- hotspot-type-forms Here-->
@@ -100,17 +103,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 </div>
 <div id="pano">
-	<script type="text/javascript">
-		embedpano({
-			swf: '<?php echo $tourUrl . '/tour.swf'; ?>',
-			xml: '<?php echo $tourUrl . '/tour.xml?' . time(); ?>',
-			target: "pano",
-			html5: "prefer",
-			passQueryParameters: true
-		});
-
-	</script>
+	<?php echo Vr360Layout::getInstance()->fetch('krpano.krpano', array('tour' => $tour)); ?>
 </div>
-<script type="text/javascript" src="./assets/js/admin/hotspots.min.js"></script>
+<script type="text/javascript" src="./assets/js/admin/hotspots.js"></script>
 </body>
 </html>
