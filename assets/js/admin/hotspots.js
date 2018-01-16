@@ -1,9 +1,5 @@
 var allow = true;
 
-function removeTags(t) {
-    return t = t.replace('"', "'")
-}
-
 function isAllowAddHotspot(isAllowAddHotspot) {
 	if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
 	allow = isAllowAddHotspot;
@@ -541,6 +537,16 @@ setTimeout(function () {
 		krpano: document.getElementById('krpanoSWFObject')
 	}
 
+	var vrUtilites = {};
+	/**
+	 * Add a Escape string
+	 *
+	 * @param string
+	 */
+	vrUtilites.escapeString = function(string) {
+		return string = escape(string);
+	}
+
 	/**
 	 * Add a krpano element
 	 *
@@ -670,59 +676,86 @@ setTimeout(function () {
 		disableButton(['#text_div', '#modal_div', '#hotspot-form-tooltip', '#image_div', '#video_div', '#link_div'])
 		enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link', '#savehotspots']);
 	}
+
 	/**
 	 * Save an hotspot
 	 *
-	 * @param t
+	 * @param type
 	 * @returns {boolean}
 	 */
-	vrKrpano.saveHotspot = function (t) {
-	    var e = jQuery(t).data("hotspot-type");
-	    if ("" == e) return !1;
+	vrKrpano.saveHotspot = function (type) {
+	    var hotspotType = jQuery(type).data("hotspot-type");
+	    if ("" == hotspotType) return !1;
 	    i += 1, uniqname = "spot_new_" + i;
-	    var o = (krpano.get("scene.count"), krpano.get("xml.scene")),
-	        n = krpano.get("m_ath"),
-	        a = krpano.get("m_atv");
-	    switch (krpano.call("addhotspot(" + uniqname + ");"), "undefined" == typeof currentHotspotData && (currentHotspotData = {}, currentHotspotData.ath = krpano.get("view.hlookat"), currentHotspotData.atv = krpano.get("view.vlookat")), e) {
+	    var sceneCount = (krpano.get("scene.count"), krpano.get("xml.scene"));
+	        mouseAth = krpano.get("m_ath"),
+	        mouseAtv = krpano.get("m_atv");
+	    switch (krpano.call("addhotspot(" + uniqname + ");"), "undefined" == typeof currentHotspotData && (currentHotspotData = {}, currentHotspotData.ath = krpano.get("view.hlookat"), currentHotspotData.atv = krpano.get("view.vlookat")), hotspotType) {
 	        case "text":
-	            var s = removeTags($("#text-title-editor").val()),
-	                r = removeTags($("#text-description-editor").val());
+	            var textTitleEditor = vrUtilites.escapeString($("#text-title-editor").val());
+	            var textDescriptionEditor = vrUtilites.escapeString($("#text-description-editor").val());
 	            if ($("#text-title-editor").val().length < 1) return alert("Enter title"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);"), krpano.call("set(hotspot[" + uniqname + "].hotspot_title, '" + s + "' "), krpano.call("set(hotspot[" + uniqname + "].hotspot_content, '" + r + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/text.png);"), $("#text-title-editor").val(""), $("#text-description-editor").val("");
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_title, '" + textTitleEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_content,   '" + textDescriptionEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/text.png);");
+	            $("#text-title-editor").val("");
+	            $("#text-description-editor").val("");
 	            break;
 	        case "modal":
-	            var p = removeTags($("#modal-title-editor").val()),
-	                l = removeTags($("#modal-description-editor").val());
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);"), krpano.call("set(hotspot[" + uniqname + "].modal_title, '" + p + "' "), krpano.call("set(hotspot[" + uniqname + "].modal_content, '" + l + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/modal.png);"), $("#modal-title-editor").val(""), $("#modal-description-editor").val("");
+	            var modalTitleEditor = vrUtilites.escapeString($("#modal-title-editor").val());
+	            var modalDescriptionEditor = vrUtilites.escapeString($("#modal-description-editor").val());
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
+	            krpano.call("set(hotspot[" + uniqname + "].modal_title, '" + modalTitleEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].modal_content, '" + modalDescriptionEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/modal.png);");
+	            $("#modal-title-editor").val(""), $("#modal-description-editor").val("");
 	            break;
 	        case "tooltip":
-	            var d = removeTags($("#text-title-editor").val()),
-	                u = removeTags($("#tooltip-description-editor").val());
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);"), krpano.call("set(hotspot[" + uniqname + "].tooltip_title, '" + d + "' "), krpano.call("set(hotspot[" + uniqname + "].tooltip_content, '" + u + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/tooltip.png);"), $("#text-title-editor").val(""), $("#tooltip-description-editor").val("");
+	            var tooltipTitleEditor = vrUtilites.escapeString($("#tooltip-title-editor").val());
+	            var tooltipDescriptionEditor = vrUtilites.escapeString($("#tooltip-description-editor").val());
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
+	            krpano.call("set(hotspot[" + uniqname + "].tooltip_title, '" + tooltipTitleEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].tooltip_content, '" + tooltipDescriptionEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/tooltip.png);");
+	            $("#text-title-editor").val("");
+	            $("#tooltip-description-editor").val("");
 	            break;
 	        case "video":
-	            var c = $("#video-url-editor").val();
-	            if (c.length > 500 || 0 !== c.indexOf("https://www.youtube.com/") && 0 !== c.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);"), krpano.call("set(hotspot[" + uniqname + "].video_url, '" + c + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/video.png);"), $("#video-url-editor").val("");
+	            var videoUrlEditor = $("#video-url-editor").val();
+	            if (videoUrlEditor.length > 500 || 0 !== videoUrlEditor.indexOf("https://www.youtube.com/") && 0 !== videoUrlEditor.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
+	            krpano.call("set(hotspot[" + uniqname + "].video_url, '" + videoUrlEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/video.png);");
+	            $("#video-url-editor").val("");
 	            break;
 	        case "image":
-	            var h = $("#image-url-editor").val();
-	            if (image_url.length > 500 || 0 !== h.indexOf("https://") && 0 !== h.indexOf("http://")) return alert("Invalid image URL"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);"), krpano.call("set(hotspot[" + uniqname + "].image_url, '" + h + "' "), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/image.png);"), $("#image-url-editor").val("");
+	            var imageUrlEditor = $("#image-url-editor").val();
+	            if (imageUrlEditor.length > 500 || 0 !== imageUrlEditor.indexOf("https://") && 0 !== imageUrlEditor.indexOf("http://")) return alert("Invalid image URL"), !1;
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
+	            krpano.call("set(hotspot[" + uniqname + "].image_url, '" + imageUrlEditor + "' ");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/image.png);");
+	            $("#image-url-editor").val("");
 	            break;
 	        case "linkscene":
-	            var m = removeTags($("#selectbox").val());
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);"), krpano.call("set(hotspot[" + uniqname + "].linkedscene, '" + m + "');"), krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png);"), $("#selectbox").selectpicker("reset")
+	            var linkedsceneEditor = $("#selectbox").val();
+	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
+	            krpano.call("set(hotspot[" + uniqname + "].linkedscene, '" + linkedsceneEditor + "');");
+	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png);");
+	            $("#selectbox").selectpicker("reset");
 	    }
-	    krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););"), krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););"), krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););"), krpano.call("set(hotspot[" + uniqname + "].ath, " + n + ");"), krpano.call("set(hotspot[" + uniqname + "].sceneName, " + o + ");"), krpano.call("set(hotspot[" + uniqname + "].atv, " + a + ");"), $("[data-popup-close]").trigger("click")
+	    krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
+	    krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
+	    krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
+	    krpano.call("set(hotspot[" + uniqname + "].ath, " + mouseAth + ");");
+	    krpano.call("set(hotspot[" + uniqname + "].sceneName, " + sceneCount + ");");
+	    krpano.call("set(hotspot[" + uniqname + "].atv, " + mouseAtv + ");");
+	    $("[data-popup-close]").trigger("click");
 	}
 
 	vrKrpano.init = function () {
 		vrKrpano.clickAction();
-
 		$('.selectpicker').selectpicker();
-
-
 	}
 
 	$(document).ready(function () {
