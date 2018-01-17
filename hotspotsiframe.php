@@ -51,27 +51,20 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<div class="alert alert-info notice-message">
 		<strong><?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_HOLD_CLICK'); ?></strong>
 	</div>
-	<div class="popup-inner" id="edit-remove-move" style="display:none;">
-		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-for-edit"
-		        onclick="editHotspot();">
-			Edit
-		</button>
-		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-for-edit"
-		        onclick="moveHotspot();">
-			Move
-		</button>
-		<button type="button" id="devare_hotpost" class="btn btn-primary btn-sm button-for-edit"
-		        onclick="devareHotspot();">
-			Devare
-		</button>
+	<!-- <div class="popup-inner" id="edit-remove-move" style="display:none;">
 		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-		<!-- hotspot-type-forms Here-->
-	</div>
-	<div class="popup" data-popup="popup-1">
-		<div class="popup-inner" id="popup">
+	</div> -->
+	<div class="popup" data-popup="popup-1" >
+		<div class="popup-inner" id="popup" data-mode="add">
 			<form class="">
 				<input type="hidden" id="user_id" value="<?php echo $tour->created_by ?>">
 				<input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
+				<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.editText();"> Edit
+				</button>
+				<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.moveHotspot();">		Move
+				</button>
+				<button type="button" id="delete-hotpost" class="btn btn-primary btn-sm button-for-edit"onclick="vrKrpano.deleteHotspot();">Delete
+				</button>
 
 				<?php echo Vr360Layout::getInstance()->fetch('krpano.actions'); ?>
 
