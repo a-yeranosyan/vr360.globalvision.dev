@@ -61,9 +61,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				<input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
 				<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.editText();"> Edit
 				</button>
-				<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.moveHotspot();">		Move
+				<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.update('updateHotspotPosition');"> Move
 				</button>
-				<button type="button" id="delete-hotpost" class="btn btn-primary btn-sm button-for-edit"onclick="vrKrpano.deleteHotspot();">Delete
+				<button type="button" id="delete-hotpost" class="btn btn-primary btn-sm button-for-edit"onclick="vrKrpano.remove();"> Delete
 				</button>
 
 				<?php echo Vr360Layout::getInstance()->fetch('krpano.actions'); ?>

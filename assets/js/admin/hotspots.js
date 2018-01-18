@@ -142,30 +142,6 @@ function rotateToDefaultViewOf(scene) {
 }
 
 function hmv(currentHotspot, currentScene, i) {
-
-// 				if (typeof currentHotspot !== "object") return false;
-// 				var hotspotList = superHotspot.hotspotList;
-// 				//var sceneName = this.kr.get('xml.scene');
-// 				var sceneName = currentScene;
-// 				var currentHotspotData = {};
-// 				currentHotspotData.ath = currentHotspot.ath;
-// 				currentHotspotData.atv = currentHotspot.atv;
-// 				currentHotspotData.hotspot_type = currentHotspot.hotspot_type;
-// 				currentHotspotData.sceneName    = sceneName;
-// 				currentHotspotData.reRender     = 'true';
-
-// 				if ( typeof currentHotspot.linkedscene != 'undefined')
-// 					currentHotspotData.linkedscene = currentHotspot.linkedscene;
-// 				else if ( typeof currentHotspot.hotspot_text != 'undefined' )
-// 					currentHotspotData.hotspot_text = currentHotspot.hotspot_text;
-// 				else
-// 					console.error('no hotspot data found: ');
-
-// 				console.info (currentHotspotData);
-
-// 				current_vTour_hotspot_counter++;
-// 				hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = currentHotspotData;
-
 	//if hotspot just live in js var ( not live in xml yet )
 	if (currentHotspot.url == 'assets/images/hotspot.png') {
 		//hm... do nothing, it's auto re-locate itself
@@ -321,6 +297,7 @@ setTimeout(function () {
 	vrKrpano.uniqName = '';
 
 	var vrUtilites = {};
+
 	/**
 	 * Add a Escape string
 	 *
@@ -354,19 +331,113 @@ setTimeout(function () {
 		});
 
 		krpano.call("set(hotspot[" + elObject.name + "].onclick,  js(vrKrpano.editHotspot(" + elObject.name + ")););");
-		// @TODO Do we really need this attribute
 		krpano.call("set(hotspot[" + elObject.name + "].onover,  js(isAllowAddHotspot(false)););");
-		// @TODO Do we really need this attribute
 		krpano.call("set(hotspot[" + elObject.name + "].onout,  js(isAllowAddHotspot(true)););");
-		krpano.call("set(hotspot[" + elObject.name + "].ath, " + krpano.get('m_ath') + ");");
-		krpano.call("set(hotspot[" + elObject.name + "].sceneName, " + krpano.get('xml.scene') + ");");
-		krpano.call("set(hotspot[" + elObject.name + "].atv, " + krpano.get('m_atv') + ");");
 	}
+
+	/**
+	 * Remove a krpano element
+	 *
+	 */
+	vrKrpano.remove = function () {
+		if (confirm("Are you  Sure? ") == true) {
+			enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set-default-view'])
+			krpano.call("removehotspot(" + vrKrpano.uniqName + ");");
+
+			jQuery("[data-popup-close]").trigger("click");
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Update a krpano element
+	 * @param elType
+	 */
+	vrKrpano.update = function (elType) {
+		var _hotspot = vrKrpano.getItem(vrKrpano.uniqName);
+		var _type = _hotspot.hotspot_type;
+		switch (elType){
+			case "editText":
+				jQuery('#hotspot-form-' + _type ).find('textarea, input, select').each(function () {
+					var param_name = jQuery(this).attr('name');
+					var param_val = jQuery(this).val();
+					if (param_name == 'video_url') {
+						if (param_val.indexOf('https://www.youtube.com/') !== 0
+							&& param_val.indexOf('https://youtube.com/') !== 0) {
+							alert('Invalid video URL');
+							return false;
+						}
+					}
+					if (param_name == 'image_url') {
+						if (param_val.length > 500 || (param_val.indexOf('https://') !== 0
+								&& param_val.indexOf('http://') !== 0)) {
+							alert('Invalid image URL');
+							return false;
+						}
+					}
+
+					krpano.call("set(hotspot[" + vrKrpano.uniqName + "]." + vrUtilites.escapeString(param_name) + ", " + vrUtilites.escapeString(param_val) + " ");
+					jQuery(this).val('');
+					jQuery("[data-popup-close]").trigger("click");
+				});
+			break;
+
+			case "updateHotspotPosition":
+				var current_scene = krpano.get('xml.scene');
+				var hotspot_count = krpano.get('hotspot.count');
+
+				krpano.call("set(hotspot[" + vrKrpano.uniqName + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + vrKrpano.uniqName + "]), get(xml.scene), " + vrKrpano.uniqName + ") );')");
+
+				disableButton(['#add-hotspot', '#remove_hotpost', '#set-default-view']);
+				jQuery("[data-popup-close]").trigger("click");
+			break;
+		}
+		if(jQuery("#selectbox").val() === null){
+			alert("You must select from List");
+			return;
+		}
+	}
+
+	/**
+	 * Get Item a krpano element
+	 *
+	 * @param uniqName
+	 */
+	vrKrpano.getItem = function ( uniqName ) {
+		if( krpano.get("hotspot["+uniqName+"]") ){
+			return	krpano.get("hotspot["+uniqName+"]");
+		}else{
+			return 	null;
+		}
+	}
+
+	/**
+	 * Get All Items a krpano element
+	 *
+	 */
+	vrKrpano.getItems = function () {
+		var items = [];
+
+		var hotspot_count = krpano.get('hotspot.count');
+		for (var i = 0  ; i >= hotspot_count; i++) {
+			items.push(vrKrpano.getItem(i));
+		}
+		return items;
+	}
+
 
 	/**
 	 * Edit Hotstpot
 	 */
 	vrKrpano.editHotspot = function (uniqName) {
+		var scene = krpano.get('xml.scene');
+
+		jQuery("#selectbox option").show();
+        jQuery("#selectbox").find("[value='"+scene+"']").hide();
+        jQuery("#selectbox").selectpicker("refresh");
+        jQuery("#selectbox").selectpicker('val', 1);
+
 		// make Global
 		vrKrpano.uniqName = uniqName;
 		var _hotspot = krpano.get('hotspot[' + uniqName + ']');
@@ -397,64 +468,9 @@ setTimeout(function () {
 		jQuery('[id*="hotspot-form-"][data-edit="true"]').show();
 	}
 
-	vrKrpano.saveEdit = function () {
-		var _hotspot = krpano.get('hotspot[' + vrKrpano.uniqName + ']');
-		var _type = _hotspot.hotspot_type;
-
-		jQuery('#hotspot-form-' + _type ).find('textarea, input, select').each(function () {
-			var param_name = jQuery(this).attr('name');
-			var param_val = jQuery(this).val();
-			if (param_name == 'video_url') {
-				if (param_val.indexOf('https://www.youtube.com/') !== 0
-					&& param_val.indexOf('https://youtube.com/') !== 0) {
-					alert('Invalid video URL');
-					return false;
-				}
-			}
-			if (param_name == 'image_url') {
-				if (param_val.length > 500 || (param_val.indexOf('https://') !== 0
-						&& param_val.indexOf('http://') !== 0)) {
-					alert('Invalid image URL');
-					return false;
-				}
-			}
-
-			krpano.call("set(hotspot[" + vrKrpano.uniqName + "]." + vrUtilites.escapeString(param_name) + ", " + vrUtilites.escapeString(param_val) + " ");
-			jQuery(this).val('');
-			jQuery("[data-popup-close]").trigger("click");
-		});
-
-	}
-
 	/**
-	 * Move Hotstpot
+	 * Click action
 	 */
-	vrKrpano.moveHotspot = function () {
-		var current_scene = krpano.get('xml.scene');
-		var hotspot_count = krpano.get('hotspot.count');
-
-		for (var i = 0; i < hotspot_count; i++) {
-			krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
-		}
-
-		disableButton(['#add-hotspot', '#remove_hotpost', '#set-default-view']);
-		jQuery("[data-popup-close]").trigger("click");
-	}
-
-	/**
-	 * Edit Hotstpot
-	 */
-	vrKrpano.deleteHotspot = function () {
-		if (confirm("Are you  Sure? ") == true) {
-			enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set-default-view'])
-			krpano.call("removehotspot(" + vrKrpano.uniqName + ");");
-
-			jQuery("[data-popup-close]").trigger("click");
-		} else {
-			return false;
-		}
-	}
-
 	vrKrpano.clickAction = function () {
 		var krpano = document.getElementById('krpanoSWFObject');
 		var timeout, clicker = $(vrKrpano.element.krpano);
@@ -516,7 +532,6 @@ setTimeout(function () {
 			$('.notice-message').show();
 
 			$('#edit-remove-move').hide();
-			$('#text_div_edit').hide();
 
 			enableButton(['#edit_hotpost', '#move_hotspot', '#delete-hotpost'])
 			disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
@@ -538,6 +553,9 @@ setTimeout(function () {
 		$('#choose-hotspot-type').show();
 	}
 
+	/**
+	 * hide hotspot types
+	 */
 	vrKrpano.hideHotspotTypes = function () {
 		disableButton([vrKrpano.element.btnAddHotspot, vrKrpano.element.btnSetDefaultView]);
 
@@ -567,6 +585,13 @@ setTimeout(function () {
 	 */
 	vrKrpano.showHotspotForm = function (el, value) {
 		var showForm = jQuery(el).data('form');
+		var scene = krpano.get('xml.scene');
+
+		jQuery("#selectbox option").show();
+        jQuery("#selectbox").find("[value='"+scene+"']").hide();
+        jQuery("#selectbox").selectpicker("refresh");
+        jQuery("#selectbox").selectpicker('val', 1);
+
 
 		disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
 
@@ -598,7 +623,7 @@ setTimeout(function () {
 	    var hotspotType = jQuery(type).data("hotspot-type");
 		var mode = jQuery("#popup").attr("data-mode");
 		if(mode == "edit"){
-			vrKrpano.saveEdit();
+			vrKrpano.update('editText');
 			return;
 	    }
 	    if ("" == hotspotType) return !1;
@@ -606,69 +631,84 @@ setTimeout(function () {
 	    var sceneCount = (krpano.get("scene.count"), krpano.get("xml.scene"));
 	        mouseAth = krpano.get("m_ath"),
 	        mouseAtv = krpano.get("m_atv");
-	    switch (krpano.call("addhotspot(" + uniqname + ");"), "undefined" == typeof currentHotspotData && (currentHotspotData = {}, currentHotspotData.ath = krpano.get("view.hlookat"), currentHotspotData.atv = krpano.get("view.vlookat")), hotspotType) {
+
+	    var hotspotObj = {
+			name: uniqname,
+			ath: krpano.get("m_ath"),
+			atv: krpano.get("m_atv"),
+			sceneName: (krpano.get("scene.count"), krpano.get("xml.scene"))
+	    };
+
+	    switch (hotspotType) {
 	        case "text":
-	            var textTitleEditor = vrUtilites.escapeString(jQuery("#text-title-editor").val());
-	            var textDescriptionEditor = vrUtilites.escapeString(jQuery("#text-description-editor").val());
-	            if (jQuery("#text-title-editor").val().length < 1) return alert("Enter title"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_title, '" + textTitleEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_content,   '" + textDescriptionEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/text.png);");
-	            jQuery("#text-title-editor").val("");
-	            jQuery("#text-description-editor").val("");
+				if (jQuery("#text-title-editor").val().length < 1) return alert("Enter title"), !1;
+
+				hotspotObj.hotspot_type = 'text';
+				hotspotObj.hotspot_title = vrUtilites.escapeString(jQuery("#text-title-editor").val());
+				hotspotObj.hotspot_content = vrUtilites.escapeString(jQuery("#text-description-editor").val());
+				hotspotObj.url = 'assets/vendor/krpano/viewer/skin/images/text.png';
+
+	            jQuery("#text-title-editor").val(""), jQuery("#text-description-editor").val("");
 	            break;
 	        case "modal":
-	            var modalTitleEditor = vrUtilites.escapeString(jQuery("#modal-title-editor").val());
-	            var modalDescriptionEditor = vrUtilites.escapeString(jQuery("#modal-description-editor").val());
 	            if (jQuery("#modal-title-editor").val().length < 1) return alert("Enter title"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-	            krpano.call("set(hotspot[" + uniqname + "].modal_title, '" + modalTitleEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].modal_content, '" + modalDescriptionEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/modal.png);");
+
+				hotspotObj.hotspot_type = 'modal';
+				hotspotObj.modal_title = vrUtilites.escapeString(jQuery("#modal-title-editor").val());
+				hotspotObj.modal_content = vrUtilites.escapeString(jQuery("#modal-description-editor").val());
+				hotspotObj.url = 'assets/vendor/krpano/viewer/skin/images/modal.png';
+
 	            jQuery("#modal-title-editor").val(""), jQuery("#modal-description-editor").val("");
+
 	            break;
 	        case "tooltip":
-	            var tooltipTitleEditor = vrUtilites.escapeString(jQuery("#tooltip-title-editor").val());
-	            var tooltipDescriptionEditor = vrUtilites.escapeString(jQuery("#tooltip-description-editor").val());
-	            if (jQuery("#tooltip-title-editor").val().length < 1) return alert("Enter title"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-	            krpano.call("set(hotspot[" + uniqname + "].tooltip_title, '" + tooltipTitleEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].tooltip_content, '" + tooltipDescriptionEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/tooltip.png);");
-	            jQuery("#text-title-editor").val("");
-	            jQuery("#tooltip-description-editor").val("");
+				if (jQuery("#tooltip-title-editor").val().length < 1) return alert("Enter title"), !1;
+
+				hotspotObj.hotspot_type = 'tooltip';
+				hotspotObj.tooltip_title = vrUtilites.escapeString(jQuery("#tooltip-title-editor").val());
+				hotspotObj.tooltip_content = vrUtilites.escapeString(jQuery("#tooltip-description-editor").val());
+				hotspotObj.url = 'assets/vendor/krpano/viewer/skin/images/tooltip.png';
+
+	            jQuery("#text-title-editor").val(""), jQuery("#tooltip-description-editor").val("");
+
 	            break;
 	        case "video":
-	            var videoUrlEditor = jQuery("#video-url-editor").val();
-	            if (videoUrlEditor.length > 500 || 0 !== videoUrlEditor.indexOf("https://www.youtube.com/") && 0 !== videoUrlEditor.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
-	            krpano.call("set(hotspot[" + uniqname + "].video_url, '" + videoUrlEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/video.png);");
-	            jQuery("#video-url-editor").val("");
-	            break;
-	        case "image":
-	            var imageUrlEditor = jQuery("#image-url-editor").val();
-	            if (imageUrlEditor.length > 500 || 0 !== imageUrlEditor.indexOf("https://") && 0 !== imageUrlEditor.indexOf("http://")) return alert("Invalid image URL"), !1;
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
-	            krpano.call("set(hotspot[" + uniqname + "].image_url, '" + imageUrlEditor + "' ");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/image.png);");
+				var videoUrlEditor = jQuery("#video-url-editor").val();
+
+				if (videoUrlEditor.length > 500 || 0 !== videoUrlEditor.indexOf("https://www.youtube.com/") && 0 !== videoUrlEditor.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
+
+	            hotspotObj.hotspot_type = 'video';
+				hotspotObj.video_url = videoUrlEditor;
+				hotspotObj.url = " assets/vendor/krpano/viewer/skin/images/video.png";
+
+				jQuery("#video-url-editor").val("");
+
+				break;
+			case "image":
+				var imageUrlEditor = jQuery("#image-url-editor").val();
+
+				if (imageUrlEditor.length > 500 || 0 !== imageUrlEditor.indexOf("https://") && 0 !== imageUrlEditor.indexOf("http://")) return alert("Invalid image URL"), !1;
+
+				hotspotObj.hotspot_type = 'image';
+				hotspotObj.image_url = imageUrlEditor;
+				hotspotObj.url = " assets/vendor/krpano/viewer/skin/images/image.png";
+
 	            jQuery("#image-url-editor").val("");
 	            break;
 	        case "linkscene":
-	            var linkedsceneEditor = jQuery("#selectbox").val();
-	            krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
-	            krpano.call("set(hotspot[" + uniqname + "].linkedscene, '" + linkedsceneEditor + "');");
-	            krpano.call("set(hotspot[" + uniqname + "].url, assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png);");
-	            jQuery("#selectbox").selectpicker("reset");
+				if(jQuery("#selectbox").val() === null){
+					alert("You must select from List");
+					return;
+				}
+				hotspotObj.hotspot_type = 'link';
+				hotspotObj.linkedscene = jQuery("#selectbox").val();
+				hotspotObj.url = "assets/vendor/krpano/viewer/skin/images/linked_edit_mode.png";
+				// krpano.call("hotspot_animate();");
+				// console.log(jQuery("#selectbox").val())
+	            break;
 	    }
-	    krpano.call("set(hotspot[" + uniqname + "].onclick,  js(vrKrpano.editHotspot(" + uniqname + ")););");
-	    krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
-	    krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
-	    krpano.call("set(hotspot[" + uniqname + "].ath, " + mouseAth + ");");
-	    krpano.call("set(hotspot[" + uniqname + "].sceneName, " + sceneCount + ");");
-	    krpano.call("set(hotspot[" + uniqname + "].atv, " + mouseAtv + ");");
-	    jQuery("[data-popup-close]").trigger("click");
+		vrKrpano.add(hotspotObj, 'hotspot');
+		jQuery("[data-popup-close]").trigger("click");
 	}
 
 	vrKrpano.init = function () {
