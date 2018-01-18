@@ -9,6 +9,7 @@
 				size="29"
 				placeholder="Video Url"
 				class="form-control"
+				name="video_url"
 				style="margin-bottom: 5px; margin-top: 5px;"
 		/>
 	</div>

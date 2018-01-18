@@ -1,10 +1,8 @@
-<div id="start-actions" class="">
-	<button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom"
-	        onclick="addHotspot();">
-		<i class="fas fa-street-view"></i> Add hotspot here
+<div id="krpano-actions" class="">
+	<button type="button" id="add-hotspot" class="btn btn-primary btn-sm button-custom" onclick="vrKrpano.showHotspotTypes();" >
+		<i class="fas fa-street-view"></i> <?php echo \Joomla\Language\Text::_('KRPANO_ADD_HOTSPOT_HERE'); ?>
 	</button>
-	<button type="button" id="set_defaultView" class="btn btn-primary btn-sm button-custom"
-	        onclick="setDefaultView();">
-		<i class="fas fa-eye"></i> Set default view
+	<button type="button" id="set-default-view" class="btn btn-primary btn-sm button-custom" onclick="vrKrpano.setDefaultView();" >
+		<i class="fas fa-eye"></i> <?php echo \Joomla\Language\Text::_('KRPANO_SET_DEFAULT_VIEW'); ?>
 	</button>
 </div>

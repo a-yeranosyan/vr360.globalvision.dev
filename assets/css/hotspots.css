@@ -3,7 +3,6 @@
     z-index: 9999;
     top: 25px;
     right: 25px;
-    background-color: gray;
     padding: 10px;
     opacity: 0.95;
     border-radius: 5px;
@@ -98,11 +97,11 @@
 }
 
 /* Hotspots */
-#hotspot-form-tooltip textarea {
-    resize: none;
-    width: 259px;
-    overflow: hidden;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    height: 155px;
+.editor-textarea-size {
+    resize:none;
+    width:265px;
+    overflow:hidden;
+    margin-top:2px;
+    margin-bottom:2px;
+    height:155px
 }

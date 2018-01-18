@@ -31,6 +31,7 @@
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>
 
+
 	<?php require_once __DIR__ . '/default_socials.php'; ?>
 </head>
 <body>
