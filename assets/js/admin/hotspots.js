@@ -105,8 +105,6 @@ var htmlToBBCode = function (html) {
 }
 
 var krpano = document.getElementById('krpanoSWFObject');
-// Disable autoratate;
-krpano.call("autorotate.stop()")
 
 var add_hotpost = document.getElementById('add_hotpost');
 var hotspot_done = document.getElementById('add_text');
@@ -393,10 +391,6 @@ setTimeout(function () {
 				jQuery("[data-popup-close]").trigger("click");
 			break;
 		}
-		if(jQuery("#selectbox").val() === null){
-			alert("You must select from List");
-			return;
-		}
 	}
 
 	/**
@@ -486,7 +480,7 @@ setTimeout(function () {
 					var targeted_popup_class = jQuery(this).attr('data-popup-open');
 					var mode = jQuery("#popup").attr("data-mode","add");
 
-					disableButton(["#edit_hotpost","#move_hotspot","#delete-hotpost"]);
+					disableButton(["#hotspot-edit","#hotspot-move","#hotpost-delete"]);
 
 					$(this).attr("data-form", "hotspot-form-");
 
@@ -533,7 +527,7 @@ setTimeout(function () {
 
 			$('#edit-remove-move').hide();
 
-			enableButton(['#edit_hotpost', '#move_hotspot', '#delete-hotpost'])
+			enableButton(['#hotspot-edit', '#hotspot-move', '#hotpost-delete'])
 			disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
 			enableButton(['#set-default-view', '#add-hotspot'])
 			enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);

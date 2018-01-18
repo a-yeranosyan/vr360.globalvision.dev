@@ -48,11 +48,7 @@
 				</tr>
 			</table>
 		</noscript>
-		<script type="text/javascript">
-			window.onload = function () {
-				<?php echo $tour->getKrpanoEmbedPano(); ?>
-			}
-		</script>
+		<?php echo Vr360Layout::getInstance()->fetch('krpano.krpano', array('tour' => $tour)); ?>
 	</div>
 <?php endif; ?>
 </body>
