@@ -437,6 +437,9 @@ setTimeout(function () {
 		var _hotspot = krpano.get('hotspot[' + uniqName + ']');
 		var _type = _hotspot.hotspot_type;
 		var mode = jQuery("#popup").attr("data-mode","edit");
+		var x = event.pageX;
+		var y = event.pageY;
+		jQuery(".popup-inner#popup").css({left: x, top: y});
 		jQuery('[data-popup=popup-1]').show();
 		vrKrpano.closeHotspotForm();
 		vrKrpano.hideHotspotTypes();
