@@ -213,10 +213,8 @@
 	 * Show edit form
 	 */
 	vrKrpano.showEditHotspotForm = function () {
-		var krpano = vrKrpano.krpano;
-
 		// Get current hotspot
-		var hotspotObj = krpano.get('hotspot[' + vrKrpano.uniqName + ']');
+		var hotspotObj = vrKrpano.krpano.get('hotspot[' + vrKrpano.uniqName + ']');
 
 		// Hotspot type
 		var hotspotType = hotspotObj.hotspot_type;
@@ -230,7 +228,8 @@
 		jQuery('#hotspot-form-' + hotspotType).attr('data-edit', true);
 
 		jQuery('#hotspot-form-' + hotspotType).find('textarea, input, select').each(function () {
-			jQuery(this).val(decodeURIComponent(hotspotObj[param_name]));
+			var paramName = jQuery(this).attr('name');
+			jQuery(this).val(decodeURIComponent(hotspotObj[paramName]));
 		});
 
 		jQuery('[id*="hotspot-form-"][data-edit="true"]').show();
