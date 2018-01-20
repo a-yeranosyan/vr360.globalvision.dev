@@ -210,20 +210,26 @@
 	}
 
 	/**
-	 * Edit Text
+	 * Show edit form
 	 */
-	vrKrpano.editText = function () {
-		var hotspotObj = krpano.get('hotspot[' + vrKrpano.uniqName + ']');
+	vrKrpano.showEditHotspotForm = function () {
+		// Get current hotspot
+		var hotspotObj = vrKrpano.krpano.get('hotspot[' + vrKrpano.uniqName + ']');
+
+		// Hotspot type
 		var hotspotType = hotspotObj.hotspot_type;
 
 		disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+
+		// Show select type
 		vrKrpano.showHotspotTypes();
+
 		jQuery('[id*="hotspot-form-"]').attr('data-edit', false).hide();
 		jQuery('#hotspot-form-' + hotspotType).attr('data-edit', true);
 
 		jQuery('#hotspot-form-' + hotspotType).find('textarea, input, select').each(function () {
-			var param_name = jQuery(this).attr('name');
-			jQuery(this).val(decodeURIComponent(hotspotObj[param_name]));
+			var paramName = jQuery(this).attr('name');
+			jQuery(this).val(decodeURIComponent(hotspotObj[paramName]));
 		});
 
 		jQuery('[id*="hotspot-form-"][data-edit="true"]').show();
