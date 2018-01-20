@@ -336,6 +336,7 @@
 		defaultViewList[scene].fov = krpano.get('view.fov');
 
 		alert('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
+		jQuery("[data-popup-close]").trigger("click");
 	}
 
 	/**
