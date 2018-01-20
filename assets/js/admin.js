@@ -1,8 +1,7 @@
 (function (w, $) {
 	var vrAdmin = {
 
-		reload: function()
-		{
+		reload: function () {
 			window.location = window.location.href;
 		},
 
@@ -441,12 +440,10 @@
 					}
 				})
 					.done(function (data, textStatus, jqXHR) {
-						if (data.status)
-						{
+						if (data.status) {
 							vrAdmin.reload();
 						}
-						else
-						{
+						else {
 							vrAdmin.Log.appendArray(data.messages);
 							vrAdmin.Waiting.stay();
 						}
@@ -520,10 +517,11 @@
 		 */
 		saveHotspot: function (el) {
 			var tourId = $(el).data("tour-id");
-			var ifHotspotObj = document.getElementById("editTourHotspots").contentWindow;
+			var iframeWindow = document.getElementById("editTourHotspots").contentWindow;
 
-			if (!ifHotspotObj.isReady()) {
+			if (!iframeWindow.vrKrpano.isEditCompleted()) {
 				alert("Please finish to add hotspot before saving or click cancel");
+
 				return false;
 			}
 
@@ -534,8 +532,8 @@
 					view: "hotspot",
 					task: "ajaxSaveHotspot",
 					id: tourId,
-					hotspotList: JSON.stringify(ifHotspotObj.superHotspot.getData().hotspotList),
-					defaultViewList: JSON.stringify(ifHotspotObj.defaultViewList)
+					hotspotList: JSON.stringify(iframeWindow.superHotspot.getData().hotspotList),
+					defaultViewList: JSON.stringify(iframeWindow.defaultViewList)
 				},
 				dataType: 'json',
 				beforeSend: function () {
