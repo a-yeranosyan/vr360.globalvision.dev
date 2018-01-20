@@ -1,8 +1,8 @@
-<layer name="fix_description" type="container" keep="true" align="lefttop" x="80" y="64"
+<layer name="fix-description" type="container" keep="true" align="lefttop" x="80" y="68"
        bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false">
 	<layer
 		bgcolor="0x000000" bgalpha="0.6"
-		name="fix_description_text"
+		name="fix-description-text"
 		id="tour-description"
 		class="tour-description"
 		type="text"
