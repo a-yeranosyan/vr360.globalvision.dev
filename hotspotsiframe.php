@@ -52,24 +52,18 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </head>
 <body>
 <div id="button-container">
+
 	<div class="alert alert-info notice-message">
 		<strong><?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_HOLD_CLICK'); ?></strong>
 	</div>
-	<div class="popup" data-popup="popup-1" >
+
+	<div class="popup" data-popup="popup-1">
 		<div class="popup-inner" id="popup" data-mode="add">
-			<form class="">
+			<form class="" name="tour-form">
 				<input type="hidden" id="user_id" value="<?php echo $tour->created_by ?>">
 				<input type="hidden" id="tour_id" value="<?php echo $tour->id ?>">
-				<button type="button" id="hotspot-edit" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.editText();">
-					<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_EDIT'); ?>
-				</button>
-				<button type="button" id="hotspot-move" class="btn btn-primary btn-sm button-for-edit" onclick="vrKrpano.update('updateHotspotPosition');"> 
-					<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_MOVE'); ?>
-				</button>
-				<button type="button" id="hotpost-delete" class="btn btn-primary btn-sm button-for-edit"onclick="vrKrpano.remove('hotspot');">
-					<?php echo \Joomla\Language\Text::_('HOTSPOT_BUTTON_DELETE'); ?>
-				</button>
 
+				<?php echo Vr360Layout::getInstance()->fetch('krpano.hotspots.actions'); ?>
 				<?php echo Vr360Layout::getInstance()->fetch('krpano.actions'); ?>
 
 				<div class="row">
