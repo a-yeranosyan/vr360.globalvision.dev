@@ -29,7 +29,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 ?>
 <krpano version="1.19" title="Virtual Tour">
 	<?php foreach ($includes as $include): ?>
-		<include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/<?php echo $include; ?>"/>
+		<!-- <include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/<?php echo $include; ?>"/> -->
 	<?php endforeach; ?>
 
 	<?php if ($tour->params->get('rotation', false)): ?>
@@ -41,13 +41,14 @@ $includes     = Vr360HelperKrpano::getIncludes();
 		/>
 	<?php endif; ?>
 
+	<!-- Default skin -->
 	<skin_settings maps="false"
 	               maps_type="google"
 	               maps_bing_api_key=""
 	               maps_google_api_key=""
 	               maps_zoombuttons="false"
 	               gyro="true"
-	               webvr="true"
+	               webvr="<?php echo $tour->params->get('vr_mode', false) ?>"
 	               webvr_gyro_keeplookingdirection="false"
 	               webvr_prev_next_hotspots="true"
 	               littleplanetintro="false"
@@ -70,7 +71,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
 	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
 	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
-	               loadingtext="loading..."
+	               loadingtext="[img src='../../../assets/images/ajax-loader.gif'/]"
 	               layout_width="100%"
 	               layout_maxwidth="814"
 	               controlbar_width="-24"
@@ -92,8 +93,16 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               design_text_shadow="1"
 	/>
 
-	<!-- Use for override everything -->
+	<!-- Skin override only -->
 	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
+
+	<!-- User logo -->
+	<?php if ($tour->params->get('userlogo') && $tour->getUser()->haveLogo()): ?>
+		<layer name="user_logo" type="container" keep="true" x="16" y="60">
+			<layer name="logo" type="image" url="<?php echo $tour->getUser()->getLogoUrl(); ?>"
+			       keep="true" lefttop="center" width="50" height="50"/>
+		</layer>
+	<?php endif; ?>
 
 	<action name="startup" autorun="onstart">
 		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[<?php echo $defaultScene ?>].name); );
@@ -101,6 +110,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 		if(startactions !== null, startactions() );
 	</action>
 
+	<!-- Social -->
 	<?php if ($tour->params->get('socials', false) == 1): ?>
 		<include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/social-skin.xml"/>
 	<?php endif; ?>
@@ -111,4 +121,8 @@ $includes     = Vr360HelperKrpano::getIncludes();
 			<?php echo $layoutHelper->fetch('tour.scene', array('scene' => $scene)) ?>
 		<?php endforeach; ?>
 	<?php endif; ?>
+
+	<?php echo $layoutHelper->fetch('tour.layers.title', array('tour' => $tour)) ?>
+	<?php echo $layoutHelper->fetch('tour.layers.description', array('tour' => $tour)) ?>
+
 </krpano>

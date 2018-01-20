@@ -55,7 +55,7 @@ class Vr360Factory
 			return $instance;
 		}
 
-		$instance = Vr360Session::getInstance()->get('user', new Vr360TableUser);
+		$instance = Vr360Session::getInstance()->get('user', new Vr360User);
 
 		return $instance;
 	}

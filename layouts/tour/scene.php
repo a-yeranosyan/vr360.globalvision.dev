@@ -8,7 +8,7 @@ defined('_VR360_EXEC') or die;
  */
 $fileName = explode('.', $scene->file)[0];
 
-$hotspots = $scene->getHotspots();
+$hotspots    = $scene->getHotspots();
 $defaultView = $scene->getParam('defaultview');
 $defaultView = new Vr360Object($defaultView);
 ?>
@@ -16,7 +16,7 @@ $defaultView = new Vr360Object($defaultView);
 		name="scene_<?php echo $fileName ?>"
 		title="<?php echo $scene->name ?>"
 		subtitle="<?php echo $scene->description ?>"
-		onstart=""
+		onstart="jscall(setTimeout(function() { if(typeof superHotspot !== 'undefined') { superHotspot = new superHotspotObj(krpano); } }, 500);)"
 		thumburl="panos/<?php echo $fileName ?>.tiles/thumb.jpg"
 		lat=""
 		lng=""
@@ -25,18 +25,20 @@ $defaultView = new Vr360Object($defaultView);
 	<view
 			hlookat="<?php echo $defaultView->get('hlookat', VR360_TOUR_SCENE_DEFAULT_HLOOKAT); ?>"
 			vlookat="<?php echo $defaultView->get('vlookat', VR360_TOUR_SCENE_DEFAULT_VLOOKAT); ?>"
-			fov="<?php echo $defaultView->get('fov', $scene->getParam('fov',VR360_TOUR_SCENE_DEFAULT_FOV)); ?>"
-
+			fov="<?php echo $defaultView->get('fov', $scene->getParam('fov', VR360_TOUR_SCENE_DEFAULT_FOV)); ?>"
 			fovtype="<?php echo $scene->getParam('fovtype', VR360_TOUR_SCENE_DEFAULT_FOVTYPE); ?>"
 			maxpixelzoom="<?php echo $scene->getParam('maxpixelzoom', VR360_TOUR_SCENE_DEFAULT_MAXPIXELZOOM); ?>"
 			fovmin="<?php echo $scene->getParam('fovmin', VR360_TOUR_SCENE_DEFAULT_FOVMIN); ?>"
 			fovmax="<?php echo $scene->getParam('fovmax', VR360_TOUR_SCENE_DEFAULT_FOVMAX); ?>"
 			limitview="<?php echo $scene->getParam('limitview', VR360_TOUR_SCENE_DEFAULT_LIMITVIEW); ?>"
 	/>
+
 	<preview url="panos/<?php echo $fileName ?>.tiles/preview.jpg"/>
+
 	<image>
 		<cube url="panos/<?php echo $fileName ?>.tiles/pano_%s.jpg"/>
 	</image>
+
 	<?php if (!empty($hotspots)): ?>
 		<?php foreach ($hotspots as $index => $hotspot): ?>
 			<?php
@@ -46,7 +48,10 @@ $defaultView = new Vr360Object($defaultView);
 			{
 				foreach ($hotspot->params as $key => $value)
 				{
-					$data[] = $key . '="' . $value . '"';
+					if (is_string($key) && is_string($value))
+					{
+						$data[] = $key . '="' . $value . '"';
+					}
 				}
 			}
 			?>
@@ -55,7 +60,8 @@ $defaultView = new Vr360Object($defaultView);
 			         style="<?php echo $hotspot->style; ?>"
 			         hotspot_type="<?php echo $hotspot->type; ?>"
 			         ath="<?php echo $hotspot->ath ?>"
-			         atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?> />
+			         atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?>
+			/>
 		<?php endforeach; ?>
 	<?php endif; ?>
 </scene>

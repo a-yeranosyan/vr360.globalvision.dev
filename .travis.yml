@@ -59,4 +59,3 @@ script:
 - cd ..
 - vendor/bin/codecept bootstrap
 - vendor/bin/robo run:test
-

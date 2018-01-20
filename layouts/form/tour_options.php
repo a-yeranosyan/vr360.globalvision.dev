@@ -1,23 +1,26 @@
 <?php
-
 defined('_VR360_EXEC') or die;
-
 // Skins
 $skins = Vr360HelperKrpano::getListOfSkins();
-
 ?>
+<style type="text/css">
+	.custom-button {
+		width: 161px;
+	}
+</style>
 <div class="tour-options">
 	<div class="form-group">
 		<span class="col-sm-2 control-label label label-primary">
-			<i class="fa fa-cogs" aria-hidden="true"></i> Options
+			<i class="fa fa-cogs" aria-hidden="true"></i> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTIONS'); ?>
 		</span>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Skins</label>
+		<label class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_SKIN'); ?></label>
 		<div class="col-sm-10">
 			<select class="form-control input-sm tour-skins" title="skin" name="params[skin]">
 				<?php foreach ($skins as $skin): ?>
-					<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+					<?php ($skin == $tour->params->get('skin', 'default.xml')) ? $selected = 'selected' : $selected = '' ?>
+					<option value="<?php echo $skin; ?>" <?php echo $selected; ?>><?php echo $skin; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -33,7 +36,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[rotation]"
 							<?php echo ($tour->params->get('rotation', false)) ? 'checked="checked"' : '' ?>
-								value="1" size="80"/> Check for auto rotation.
+								value="1"
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
 					</label>
 				</div>
 			</div>
@@ -47,10 +51,92 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								name="params[socials]"
 								value="1"
 							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Check for show media social button.
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_SHOW_MEDIA_SOCIAL_BUTTONS'); ?>
 					</label>
 				</div>
 			</div>
+			<?php if (Vr360Factory::getUser()->haveLogo()): ?>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input
+									type="checkbox"
+									id="tour-param-use-logo"
+									class="tour-params"
+									name="params[userlogo]"
+									value="1"
+								<?php echo ($tour->params->get('userlogo', false)) ? 'checked="checked"' : '' ?>
+									size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
+						</label>
+					</div>
+				</div>
+			<?php endif; ?>
+			<!-- <div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-map"
+								class="tour-params"
+								name=""
+								value="1"
+								size="80"/>Map Display
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-vr"
+								class="tour-params"
+								name=""
+								value="1"
+								size="80"/>Level Display
+					</label>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[vr_mode]"
+								value="1"
+								size="80"/>**Vr mode**
+					</label>
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<div class="checkbox">
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle custom-button" type="button"
+						        data-toggle="dropdown">Hotspots Colour
+							<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Red</a></li>
+							<li><a href="#">Green</a></li>
+							<li><a href="#">Blue</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="checkbox">
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle custom-button" type="button"
+						        data-toggle="dropdown">Hotspots Type
+							<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Blinking</a></li>
+							<li><a href="#">Still</a></li>
+							<li><a href="#">Custom Icon</a></li>
+							<li><a href="#">Graphic</a></li>
+						</ul>
+					</div>
+				</div>
+			</div> -->
 		</div>
 	</div>
 </div>
