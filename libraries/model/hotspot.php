@@ -152,8 +152,7 @@ class Vr360ModelHotspot extends Vr360Model
 
 						break;
 					case 'video':
-						$hotspotObj->style  = 'hotspot_style_video';
-						$hotspotObj->params = array('video_url' => $hotspot['video_url']);
+						$hotspotObj->style = 'hotspot_style_video';
 
 						if (empty($hotspot['video_url']))
 						{
@@ -161,6 +160,23 @@ class Vr360ModelHotspot extends Vr360Model
 
 							$hotspotObj->valid = false;
 						}
+
+						$shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_]+)\??/i';
+						$longUrlRegex  = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))(\w+)/i';
+
+						if (preg_match($longUrlRegex, $hotspot['video_url'], $matches))
+						{
+							$youtubeId = $matches[count($matches) - 1];
+						}
+
+						if (preg_match($shortUrlRegex, $hotspot['video_url'], $matches))
+						{
+							$youtubeId = $matches[count($matches) - 1];
+						}
+
+						$url                = '//www.youtube.com/embed/' . $youtubeId;
+						$hotspotObj->params = array('video_url' => $url);
+
 						break;
 					case 'image':
 						$hotspotObj->style  = 'hotspot_style_image';
