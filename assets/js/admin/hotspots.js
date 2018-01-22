@@ -11,7 +11,7 @@
 	};
 
 	vrUtilities.validateYoutubeUrl = function (url) {
-		if (url('https://www.youtube.com/') !== 0 && url.indexOf('https://youtube.com/') !== 0) {
+		if (url.indexOf('https://youtube.com/') !== 0 && url.indexOf('//www.youtube.com/') !== 0) {
 			alert('Invalid video URL');
 
 			return false;
@@ -21,6 +21,7 @@
 		var match = url.match(regExp);
 
 		if (match && match[2].length == 11) {
+			console.log(match[2]);
 			return match[2];
 		}
 
@@ -219,7 +220,7 @@
 		// Hotspot type
 		var hotspotType = hotspotObj.hotspot_type;
 
-		disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+		disableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
 
 		// Show select type
 		vrKrpano.showHotspotTypes();
@@ -303,7 +304,7 @@
 			enableButton(['#hotspot-edit', '#hotspot-move', '#hotpost-delete'])
 			disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video', '#edit_link'])
 			enableButton(['#set-default-view', '#add-hotspot'])
-			enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+			enableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
 
 			var targeted_popup_class = jQuery(this).attr('data-popup-close');
 			$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
@@ -361,7 +362,7 @@
 		jQuery("#selectbox").selectpicker('val', 1);
 
 
-		disableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link']);
+		disableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
 
 		jQuery('#' + showForm).show();
 	}
@@ -372,7 +373,7 @@
 		switch (mode) {
 			case 'add':
 				disableButton(['#hotspot-form-text', '#hotspot-form-modal', '#hotspot-form-tooltip', '#hotspot-form-image', '#hotspot-form-video', '#hotspot-form-link'])
-				enableButton(['#add_text', '#add_Tooltip', '#add_Modal', '#add_image', '#add_video', '#add_link', '#savehotspots']);
+				enableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link', '#savehotspots']);
 				break;
 			case 'edit':
 				disableButton(['#hotspot-form-text', '#hotspot-form-modal', '#hotspot-form-tooltip', '#hotspot-form-image', '#hotspot-form-video', '#hotspot-form-link'])
@@ -608,14 +609,12 @@ var htmlToBBCode = function (html) {
 var krpano = document.getElementById('krpanoSWFObject');
 
 var add_hotpost = document.getElementById('add_hotpost');
-var hotspot_done = document.getElementById('add_text');
 var selectbox = document.getElementById('selectbox');
 var showlink = document.getElementById('show_link');
 
 var i = 0;
 var hotspots = {};
 var uniqname = '';
-var scene_nums = krpano.get('scene.count');
 var hotspotList = [];
 var current_scene = '';
 var current_vTour_hotspot_counter = 0;
