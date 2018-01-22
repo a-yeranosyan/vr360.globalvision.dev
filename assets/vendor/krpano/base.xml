@@ -1,5 +1,4 @@
 <krpano>
-<!-- linkedScene -->
 <style
         name="hotspot_style_linkedscene"
         crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"
@@ -162,11 +161,9 @@
 <action name="modal_action">
     set(layer[overlay_modal].visible, true);
     txtadd(layer[modal_popup].html,'[b]',get(modal_title),'[/b][br][br]',get(modal_content));
-    <!-- layer[modal_popup].html,'[h4]',get(modal_title),'[br]',get(modal_content),''; -->
 </action>
 <action name="modal_layer_hide">
     set(layer[overlay_modal].visible, false);
-    <!-- layer[modal_popup].html,'[h4]',get(modal_title),'[br]',get(modal_content),''; -->
 </action>
 <layer name="overlay_modal" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
            bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="modal_layer_hide();" >
