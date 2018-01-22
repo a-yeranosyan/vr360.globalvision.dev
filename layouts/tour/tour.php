@@ -98,9 +98,9 @@ $includes     = Vr360HelperKrpano::getIncludes();
 
 	<!-- User logo -->
 	<?php if ($tour->params->get('userlogo') && $tour->getUser()->haveLogo()): ?>
-		<layer name="user_logo" type="container" keep="true" x="15" y="15">
+		<layer name="user_logo" type="container" keep="true" x="16" y="60">
 			<layer name="logo" type="image" url="<?php echo $tour->getUser()->getLogoUrl(); ?>"
-			       keep="true" lefttop="center" width="100" height="100"/>
+			       keep="true" lefttop="center" width="50" height="50"/>
 		</layer>
 	<?php endif; ?>
 

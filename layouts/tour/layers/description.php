@@ -1,4 +1,4 @@
-<layer name="fix-description" type="container" keep="true" align="lefttop" x="10" y="170"
+<layer name="fix-description" type="container" keep="true" align="lefttop" x="80" y="68"
        bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false">
 	<layer
 		bgcolor="0x000000" bgalpha="0.6"
@@ -7,7 +7,7 @@
 		class="tour-description"
 		type="text"
 		width="300"
-		css="max-width: 500px; max-height: 250px; color:0xFFFFFF; font-size:15px;padding:5px"
+		css="max-width: 500px; max-height: 250px; color:0xFFFFFF; font-size:17px"
 		align="topleft"
 		x="5"
 		y="0"
