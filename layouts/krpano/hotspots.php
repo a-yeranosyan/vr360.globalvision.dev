@@ -28,13 +28,11 @@
 	        onclick="vrKrpano.showHotspotForm(this);">
 		<i class="fas fa-video"></i> <?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_ADD_VIDEO'); ?>
 	</button>
-</div>
 <?php if (!empty($scenes) && count($scenes) > 1): ?>
-	<div class="button-group" role="group">
 		<button type="button" id="button-add-link" class="btn btn-primary btn-sm button-custom"
 		        data-form="hotspot-form-link"
 		        onclick="vrKrpano.showHotspotForm(this);">
 			<i class="fas fa-link"></i> <?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_ADD_LINK_SCENE'); ?>
 		</button>
-	</div>
 <?php endif; ?>
+</div>

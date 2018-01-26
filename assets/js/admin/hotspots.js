@@ -21,7 +21,6 @@
 		var match = url.match(regExp);
 
 		if (match && match[2].length == 11) {
-			console.log(match[2]);
 			return match[2];
 		}
 
@@ -206,6 +205,7 @@
 
 		jQuery(".popup-inner#popup").css({left: x, top: y});
 		jQuery('[data-popup=popup-1]').show();
+		jQuery(".popup-close").css({left: -25,top: 8});
 		vrKrpano.closeHotspotForm();
 		vrKrpano.hideHotspotTypes();
 	}
@@ -256,12 +256,28 @@
 
 					disableButton(["#hotspot-edit", "#hotspot-move", "#hotpost-delete"]);
 
-					$(this).attr("data-form", "hotspot-form-");
+					jQuery(this).attr("data-form", "hotspot-form-");
 
-					$('[data-popup=popup-1]').fadeIn(350);
+					jQuery('[data-popup=popup-1]').fadeIn(350);
+					jQuery(".popup-inner#popup")
+					jQuery(".popup-close").css({left: -25,top: 8});
+
 					var x = e.pageX;
 					var y = e.pageY;
+
+					var windowWidth = $( window ).width();
+					var windowHeight = $( window ).height();
+
+					if( y > windowHeight - 90 ){
+						y = (windowHeight - 90);
+					}
+
+					if( x > windowWidth - 420 ){
+						x = windowWidth - 420 ;
+					}
+
 					krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+
 					$(".popup-inner#popup").css({left: x, top: y});
 					$('.notice-message').hide();
 
@@ -319,6 +335,10 @@
 		disableButton([vrKrpano.element.btnAddHotspot, vrKrpano.element.btnSetDefaultView]);
 
 		$('#choose-hotspot-type').show();
+		var popupPosition = jQuery("#popup").position();
+
+		jQuery('#popup').css({left: popupPosition.left, top: popupPosition.top});
+
 	}
 
 	/**
@@ -364,7 +384,17 @@
 
 		disableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
 
+
 		jQuery('#' + showForm).show();
+
+		var popupPosition = jQuery("#popup").position();
+		var windowHeight =jQuery( window ).height();
+
+		if(popupPosition.top > windowHeight - jQuery( "#popup" ).height() ){
+			popupPosition.top = windowHeight - jQuery( "#popup" ).height();
+		}
+
+		jQuery('#popup').css({left: popupPosition.left, top: popupPosition.top});
 	}
 
 	vrKrpano.closeHotspotForm = function () {

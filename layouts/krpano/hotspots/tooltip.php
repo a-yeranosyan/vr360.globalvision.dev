@@ -1,6 +1,7 @@
 <!-- Tooltip-->
 <div id="hotspot-form-tooltip" class="" style="display: none;">
 	<div class="form-group">
+		<label class="label-add-edt-text">Tooltip</label>
 		<input
 				id='tooltip-title-editor'
 				type="text"
