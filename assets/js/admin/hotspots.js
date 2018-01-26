@@ -12,7 +12,7 @@
 
 	vrUtilities.validateYoutubeUrl = function (url) {
 		if (url.indexOf('https://youtube.com/') !== 0 && url.indexOf('//www.youtube.com/') !== 0) {
-			alert('Invalid video URL');
+			alert('Please add a YouTube');
 
 			return false;
 		}
@@ -221,9 +221,11 @@
 		var hotspotType = hotspotObj.hotspot_type;
 
 		disableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
-
+		disableButton(["#hotspot-edit", "#hotspot-move", "#hotpost-delete","#button-back"]);
+		
 		// Show select type
 		vrKrpano.showHotspotTypes();
+
 
 		jQuery('[id*="hotspot-form-"]').attr('data-edit', false).hide();
 		jQuery('#hotspot-form-' + hotspotType).attr('data-edit', true);
@@ -385,6 +387,7 @@
 		disableButton(['#button-add-text', '#button-add-tooltip', '#button-add-modal', '#button-add-image', '#button-add-video', '#button-add-link']);
 
 
+		jQuery("input,textarea").val('');
 		jQuery('#' + showForm).show();
 
 		var popupPosition = jQuery("#popup").position();
@@ -474,7 +477,7 @@
 			case "video":
 				var videoUrlEditor = jQuery("#video-url-editor").val();
 
-				if (videoUrlEditor.length > 500 || 0 !== videoUrlEditor.indexOf("https://www.youtube.com/") && 0 !== videoUrlEditor.indexOf("https://youtube.com/")) return alert("Invalid video URL"), !1;
+				if (videoUrlEditor.length > 500 || 0 !== videoUrlEditor.indexOf("https://www.youtube.com/") && 0 !== videoUrlEditor.indexOf("https://youtube.com/")) return alert("Please add a YouTube"), !1;
 
 				hotspotObj.hotspot_type = 'video';
 				hotspotObj.video_url = videoUrlEditor;

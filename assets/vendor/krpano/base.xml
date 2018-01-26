@@ -146,7 +146,7 @@
                oy="-30" scale="0.5" />
     </layer>
 <action name="text_load_action">
-  txtadd(layer[tooltip_text].html,get(tooltip_title),' ',get(tooltip_content));
+  txtadd(layer[tooltip_text].html,get(tooltip_title),'[br]',get(tooltip_content));
 </action>
 
 <!-- Modal -->

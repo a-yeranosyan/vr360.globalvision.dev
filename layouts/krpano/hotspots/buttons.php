@@ -7,6 +7,7 @@
 </button>
 <button
 	type="button"
+	id="button-back"
 	class="btn btn-danger"
 	onclick="vrKrpano.closeHotspotForm();">Back
 </button>
