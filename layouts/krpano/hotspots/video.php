@@ -1,7 +1,7 @@
 <!-- Video-->
 <div id="hotspot-form-video" class="form-group" style="display: none;">
 	<div class="form-group">
-		<label class="label-add-edt-text">YouTube video URL</label>
+		<label for="video-url-editor" class="label-add-edit-text">YouTube video URL</label>
 		<input
 				id='video-url-editor'
 				maxlength="255"

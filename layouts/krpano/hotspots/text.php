@@ -1,7 +1,7 @@
 <!-- Text-->
 <div id="hotspot-form-text"  class="form-group" style="display: none;">
 	<div class="form-group">
-		<label class="label-add-edt-text">Text</label>
+		<label for="text-title-editor" class="label-add-edit-text">Text</label>
 		<input
 				id='text-title-editor'
 				type="text"

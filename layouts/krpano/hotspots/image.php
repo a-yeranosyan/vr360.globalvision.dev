@@ -1,7 +1,7 @@
 <!-- Image-->
 <div id="hotspot-form-image" class="form-group" style="display: none;">
 	<div class="form-group">
-		<label class="label-add-edt-text">Image</label>
+		<label for="image-url-editor" class="label-add-edit-text">Image</label>
 		<input
 			id='image-url-editor'
 			type="text"
