@@ -1,7 +1,7 @@
 <!-- Modal-->
 <div id="hotspot-form-modal" class="form-group" style="display: none;">
 	<div class="form-group">
-		<label class="label-add-edt-text">Modal</label>
+		<label for="modal-title-editor" class="label-add-edit-text">Modal</label>
 		<input
 			id='modal-title-editor'
 			type="text"
