@@ -232,7 +232,7 @@
 
 		jQuery('#hotspot-form-' + hotspotType).find('textarea, input, select').each(function () {
 			var paramName = jQuery(this).attr('name');
-			jQuery(this).val(decodeURIComponent(hotspotObj[paramName]));
+			jQuery(this).val(decodeURIComponent( unescape(hotspotObj[paramName])));
 		});
 
 		jQuery('[id*="hotspot-form-"][data-edit="true"]').show();
