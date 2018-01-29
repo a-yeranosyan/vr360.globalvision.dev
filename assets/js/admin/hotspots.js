@@ -189,14 +189,16 @@
 	vrKrpano.editHotspot = function (uniqName) {
 		var scene = krpano.get('xml.scene');
 
-		jQuery("#selectbox option").show();
-		jQuery("#selectbox").find("[value='" + scene + "']").hide();
-		jQuery("#selectbox").selectpicker("refresh");
-		jQuery("#selectbox").selectpicker('val', 1);
 
 		// make Global
 		vrKrpano.uniqName = uniqName;
 		var hotspotObj = krpano.get('hotspot[' + uniqName + ']');
+
+		jQuery("#selectbox option").show();
+		jQuery("#selectbox").find("[value='" + scene + "']").hide();
+		jQuery("#selectbox").selectpicker('val', hotspotObj.linkedscene);
+		jQuery("#selectbox").selectpicker("refresh");
+
 		var hotspotType = hotspotObj.hotspot_type;
 		var mode = jQuery("#popup").attr("data-mode", "edit");
 
