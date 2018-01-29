@@ -67,7 +67,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				<?php echo Vr360Layout::getInstance()->fetch('krpano.actions'); ?>
 
 				<div class="row">
-					<div id="choose-hotspot-type" class="" style="display: none;">
+					<div id="choose-hotspot-type">
 						<div class="container-fluid">
 							<div class="form-group">
 								<!-- Choose type -->
