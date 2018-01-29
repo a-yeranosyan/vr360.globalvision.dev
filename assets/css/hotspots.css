@@ -82,6 +82,24 @@
     margin-bottom:2px;
     height:155px
 }
+#choose-hotspot-type{
+    display: none;
+}
+#hotspot-form-text{
+    display: none;
+}
+#hotspot-form-tooltip{
+    display: none;
+}
+#hotspot-form-modal{
+    display: none;
+}
+#hotspot-form-video{
+    display: none;
+}
+#hotspot-form-image{
+    display: none;
+}
 label.label-add-edit-text{
     color:white;
 }

@@ -1,5 +1,5 @@
 <!-- Text-->
-<div id="hotspot-form-text"  class="form-group" style="display: none;">
+<div id="hotspot-form-text"  class="form-group">
 	<div class="form-group">
 		<label for="text-title-editor" class="label-add-edit-text"><?php echo \Joomla\Language\Text::_('HOTSPOT_LABEL_ADD_TEXT');?> </label>
 		<input
